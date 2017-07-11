@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
 
   def authorize_user!
     if !current_user.present?
-      render json: {error: 'No user id present'}
+      render json: {error: 'No authentication'}
     end
   end
 
