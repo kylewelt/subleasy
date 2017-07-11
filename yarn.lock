@@ -4956,6 +4956,10 @@ react-error-overlay@^1.0.9:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-parallax@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/react-parallax/-/react-parallax-1.4.4.tgz#4772042ca8bab2c0535e67c56a516a4e2abb34f0"
+
 react-router-dom@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.1.1.tgz#3021ade1f2c160af97cf94e25594c5f294583025"
