@@ -5,7 +5,7 @@ import SignUpForm from '../components/SignUpForm'
 
 class UserFormsContainer extends React.Component {
   logIn = (formData) => {
-    console.log(formData)
+    this.props.logIn(formData)
   }
 
   signUp = (formData) => {

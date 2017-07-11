@@ -1,6 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { Form, Button } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 class SignUpForm extends React.Component {
   state = {

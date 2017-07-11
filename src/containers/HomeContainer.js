@@ -1,23 +1,24 @@
 import React from 'react'
-import { Segment } from 'semantic-ui-react'
+import { Segment, Loader } from 'semantic-ui-react'
 
 class HomeContainer extends React.Component {
   renderSublets = () => {
     if (this.props.sublets.length > 0) {
-      return this.props.sublets.map(sublet => {
+      return this.props.sublets.map((sublet, index) => {
         return (
-          <Segment raised>
+          <Segment key={index} raised>
             <p>{sublet.name}</p>
           </Segment>
         )
       })
     } else {
-      return <div> 'Loading...' </div>
+      return (
+        <Loader active>Loading</Loader>
+      )
     }
   }
 
   render () {
-    console.log(this.props.sublets)
     return (
       <div>
         {this.renderSublets()}
