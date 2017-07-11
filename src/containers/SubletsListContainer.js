@@ -5,9 +5,9 @@ import { Loader, Card } from 'semantic-ui-react'
 class SubletsListContainer extends React.Component {
   renderSublets = () => {
     if (this.props.sublets.length > 0) {
-      return this.props.sublets.map(sublet => {
+      return this.props.sublets.map((sublet, index) => {
         return (
-          <SubletCard key={sublet.id} sublet={sublet}/>
+          <SubletCard key={index} sublet={sublet}/>
         )
       })
     } else {
