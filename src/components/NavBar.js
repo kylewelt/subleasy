@@ -10,7 +10,7 @@ class NavBar extends React.Component {
           <NavLink exact to='/' activeStyle={{color: 'red'}}>Home</NavLink>
         </Menu.Item>
         <Menu.Item>
-          Sublets
+          <NavLink exact to='/sublets' activeStyle={{color: 'red'}}>Sublets</NavLink>
         </Menu.Item>
       </Menu>
     )
