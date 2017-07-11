@@ -3,7 +3,7 @@ class CreateSublets < ActiveRecord::Migration[5.1]
     create_table :sublets do |t|
       t.string :name
       t.references :owner, references: :users
-      t.decimal :price
+      t.integer :price
       t.date :start_date
       t.date :end_date
 
