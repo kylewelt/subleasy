@@ -12,12 +12,11 @@ class NavBarContainer extends React.Component {
         <Menu.Item>
           <NavLink exact to='/sublets' activeStyle={{color: 'red'}}>Sublets</NavLink>
         </Menu.Item>
-        <Menu.Item>
-          <NavLink exact to='/login' activeStyle={{color: 'red'}}>Login</NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <NavLink exact to='/signup' activeStyle={{color: 'red'}}>Sign Up</NavLink>
-        </Menu.Item>
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <NavLink exact to='/login' activeStyle={{color: 'red'}}>Log In</NavLink>
+          </Menu.Item>
+        </Menu.Menu>
       </Menu>
     )
   }

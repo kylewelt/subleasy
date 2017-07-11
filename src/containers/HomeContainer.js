@@ -1,27 +1,27 @@
 import React from 'react'
 import { Segment } from 'semantic-ui-react'
-import { Parallax } from 'react-parallax'
-
 
 class HomeContainer extends React.Component {
-  render() {
-    return(
-      <Parallax
-        bgImage="https://images.unsplash.com/photo-1484249655344-2798751785d3"
-      >
-          <br/>
+  renderSublets = () => {
+    if (this.props.sublets.length > 0) {
+      return this.props.sublets.map(sublet => {
+        return (
           <Segment raised>
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
-            Pellentesque habitant morbi tristique senectus.
+            <p>{sublet.name}</p>
           </Segment>
-      </Parallax>
+        )
+      })
+    } else {
+      return <div> 'Loading...' </div>
+    }
+  }
+
+  render () {
+    console.log(this.props.sublets)
+    return (
+      <div>
+        {this.renderSublets()}
+      </div>
     )
   }
 }
