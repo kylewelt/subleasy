@@ -1,5 +1,5 @@
 class SubletSerializer < ActiveModel::Serializer
-  attributes :name, :price, :start_date, :end_date, :created_at
-  belongs_to :owner
-  belongs_to :location
+  attributes :name, :price, :start_date, :end_date, :created_at, :owner_id
+  has_one :location
+  has_many :images
 end
