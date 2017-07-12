@@ -3,9 +3,15 @@ import SubletsListContainer from './SubletsListContainer'
 import SubletFilters from '../components/SubletFilters'
 import { Grid, Container } from 'semantic-ui-react'
 
+var dateFormat = require('dateformat')
+var now = new Date();
+var today = dateFormat(now, 'yyyy-mm-dd')
+
 class SubletsContainer extends React.Component {
   state= ({
-    filters: {}
+    filters: {
+      startDateFilter: today
+    }
   })
 
   onFilter = (filterData) => {
