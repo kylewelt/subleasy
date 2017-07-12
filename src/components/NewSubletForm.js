@@ -97,7 +97,7 @@ class NewSubletForm extends React.Component {
           <input required placeholder='' type='date' name='end_date' value={this.state.end_date} onChange={this.handleChange} />
         </Form.Field>
           {this.renderImages()}
-        <Form.Button content='Sign Up' />
+        <Form.Button content='Submit' />
       </Form>
     )
   }
