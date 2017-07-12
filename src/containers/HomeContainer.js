@@ -1,5 +1,6 @@
 import React from 'react'
 import { Segment, Loader } from 'semantic-ui-react'
+import ImageCarousel from '../components/Carousel'
 
 class HomeContainer extends React.Component {
   renderSublets = () => {
@@ -21,6 +22,7 @@ class HomeContainer extends React.Component {
   render () {
     return (
       <div>
+        <ImageCarousel />
         {this.renderSublets()}
       </div>
     )
