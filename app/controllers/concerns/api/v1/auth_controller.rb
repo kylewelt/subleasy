@@ -9,7 +9,9 @@ module Api
           created_jwt = issue_token({id: user.id})
 
           render json: {
-            emai: user.email,
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
             jwt: created_jwt
           }
         else
@@ -21,7 +23,9 @@ module Api
 
       def show
         render json: {
-          id: current_user.id
+          id: current_user.id,
+          first_name: current_user.first_name,
+          last_name: current_user.last_name
         }
       end
     end
