@@ -9,10 +9,10 @@ class UserFormsContainer extends React.Component {
   }
 
   signUp = (formData) => {
-    console.log(formData)
+    this.props.signUp(formData)
   }
 
-  render () {
+  render = () => {
     return (
       <Container>
         <Segment raised>

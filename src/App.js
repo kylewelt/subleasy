@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
-import AuthAdapter from './AuthAdapter'
+
+import AuthAdapter from './adapters/AuthAdapter'
+import SubletsAdapter from './adapters/SubletsAdapter'
 
 import NavBarContainer from './containers/NavBarContainer'
 import HomeContainer from './containers/HomeContainer'
@@ -17,22 +19,29 @@ class App extends Component {
   }
 
   componentWillMount = () => {
+    this.checkAuth()
     this.getSublets()
   }
 
-  logIn = (logInParams) => {
-    AuthAdapter.logIn(logInParams)
+  componentWillUpdate = (nextProps, nextState) => {
+    this.checkAuth()
+  }
+
+  checkAuth = () => {
+    if (localStorage.getItem('jwt')) {
+      AuthAdapter.currentUser()
+        .then(user => !user.error ? this.setUser(user) : this.logOut())
+    } else {
+      this.logOut()
+    }
+  }
+
+  logIn = (params) => {
+    AuthAdapter.logIn(params)
       .then(user => {
         if (!user.error) {
           localStorage.setItem('jwt', user.jwt)
-          this.setState({
-            auth: {
-              isLoggedIn: true,
-              user: {
-                user
-              }
-            }
-          })
+          this.setUser(user)
         }
       })
   }
@@ -47,19 +56,27 @@ class App extends Component {
     })
   }
 
+  setUser = (user) => {
+    this.setState({
+      auth: {
+        isLoggedIn: true,
+        user: user
+      }
+    })
+  }
+
+  getSublets = () => {
+    SubletsAdapter.getSublets()
+      .then(json => this.setSublets(json))
+  }
+
   setSublets = (data) => {
     this.setState({
       sublets: data
     })
   }
 
-  getSublets = () => {
-    fetch('http://localhost:3000/api/v1/sublets')
-      .then(resp => resp.json())
-      .then(json => this.setSublets(json))
-  }
-
-  render () {
+  render = () => {
     return (
       <Router>
         <div>
@@ -69,7 +86,7 @@ class App extends Component {
             return this.state.auth.isLoggedIn ? <SubletsContainer {...this.state} /> : <Redirect to='/' />
           }} />
           <Route exact path='/login' render={() => {
-            return this.state.auth.isLoggedIn ? <Redirect to='/' /> : <UserFormsContainer logIn={this.logIn}/>
+            return !this.state.auth.isLoggedIn ? <UserFormsContainer logIn={this.logIn}/> : <Redirect to='/' />
           }} />
         </div>
       </Router>
