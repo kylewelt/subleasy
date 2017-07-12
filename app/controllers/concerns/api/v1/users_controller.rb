@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UserController < ApplicationController
+    class UsersController < ApplicationController
       before_action :authorize_user!, only: [:show]
 
       def show
