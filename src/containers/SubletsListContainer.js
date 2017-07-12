@@ -4,7 +4,7 @@ import { Card, Loader, Segment } from 'semantic-ui-react'
 
 class SubletsListContainer extends React.Component {
   overFilter = (detail, filter) => {
-    if (filter !== '') {
+    if (filter !== '' && filter !== 0) {
       if (detail >= filter) {
         return true
       } else {
@@ -16,7 +16,7 @@ class SubletsListContainer extends React.Component {
   }
 
   underFilter = (detail, filter) => {
-    if (filter !== '') {
+    if (filter !== '' && filter !== 0) {
       if (detail <= filter) {
         return true
       } else {
@@ -28,12 +28,14 @@ class SubletsListContainer extends React.Component {
   }
 
   filterSublets = () => {
+    console.log('max price:', this.props.filters.maxPriceFilter*100)
+    console.log('rent:', this.props.sublets[0].price*1)
     return this.props.sublets.filter((sublet, index) => {
       return (
         this.overFilter(sublet.start_date, this.props.filters.startDateFilter)
         && this.overFilter(sublet.end_date, this.props.filters.endDateFilter)
-        && this.overFilter(sublet.price, this.props.filters.minPriceFilter)
-        && this.underFilter(sublet.price, this.props.filters.maxPriceFilter)
+        && this.overFilter(sublet.price*1, this.props.filters.minPriceFilter*100)
+        && this.underFilter(sublet.price*1, this.props.filters.maxPriceFilter*100)
       )
     })
   }
