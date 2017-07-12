@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :sublets
+      resources :users
+      post '/auth', to: 'auth#create'
+      get '/me', to: 'auth#show'
     end
   end
 
-  resources :users
-  post '/auth', to: 'auth#create'
+
 end
