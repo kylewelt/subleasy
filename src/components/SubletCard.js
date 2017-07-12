@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Image, Grid } from 'semantic-ui-react'
+import { Card, Image, Grid, Header } from 'semantic-ui-react'
 
 var dateFormat = require('dateformat')
 
@@ -15,16 +15,15 @@ class SubletCard extends React.Component {
           <Card.Meta>
             Listed on {dateFormat(this.props.sublet.created_at, 'mediumDate')}
           </Card.Meta>
-          <Grid columns={3} padded='vertically' divided>
+          <Grid columns={2} padded='vertically' divided>
             <Grid.Row>
               <Grid.Column>
-                <Card.Meta>x beds</Card.Meta>
+                <Header sub>Starts</Header>
+                <Card.Meta>{dateFormat(this.props.sublet.start_date, 'mediumDate')}</Card.Meta>
               </Grid.Column>
               <Grid.Column>
-                <Card.Meta>y baths</Card.Meta>
-              </Grid.Column>
-              <Grid.Column>
-                <Card.Meta>z ft²</Card.Meta>
+                <Header sub>Ends</Header>
+                <Card.Meta>{dateFormat(this.props.sublet.end_date, 'mediumDate')}</Card.Meta>
               </Grid.Column>
             </Grid.Row>
           </Grid>

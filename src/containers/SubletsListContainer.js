@@ -31,7 +31,7 @@ class SubletsListContainer extends React.Component {
     return this.props.sublets.filter((sublet, index) => {
       return (
         this.overFilter(sublet.start_date, this.props.filters.startDateFilter)
-        && this.underFilter(sublet.end_date, this.props.filters.endDateFilter)
+        && this.overFilter(sublet.end_date, this.props.filters.endDateFilter)
         && this.overFilter(sublet.price, this.props.filters.minPriceFilter)
         && this.underFilter(sublet.price, this.props.filters.maxPriceFilter)
       )
