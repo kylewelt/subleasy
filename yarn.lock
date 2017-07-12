@@ -4966,10 +4966,6 @@ react-error-overlay@^1.0.9:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-parallax@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/react-parallax/-/react-parallax-1.4.4.tgz#4772042ca8bab2c0535e67c56a516a4e2abb34f0"
-
 react-responsive-carousel@^3.1.24:
   version "3.1.24"
   resolved "https://registry.yarnpkg.com/react-responsive-carousel/-/react-responsive-carousel-3.1.24.tgz#035572078dccbab77c5d03e071484cd1a235bc89"

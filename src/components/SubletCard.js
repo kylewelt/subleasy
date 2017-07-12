@@ -1,16 +1,13 @@
 import React from 'react'
-import { Card, Image, Grid, Segment } from 'semantic-ui-react'
+import { Card, Image, Grid } from 'semantic-ui-react'
 
 var dateFormat = require('dateformat')
 
 class SubletCard extends React.Component {
   render () {
-    console.log(this.props.sublet)
     return (
       <Card raised>
-        <Image>
-          <img src='https://images.unsplash.com/photo-1466098672325-c9ddda4b7975' />
-        </Image>
+        <Image src={this.props.sublet.images[0].url} alt='Sublet View' />
         <Card.Content>
           <Card.Header>
             ${this.props.sublet.price / 100} / month
