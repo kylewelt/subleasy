@@ -1,15 +1,17 @@
 import React from 'react'
-import { Segment, Loader } from 'semantic-ui-react'
-import ImageCarousel from '../components/Carousel'
+import { Container, Loader } from 'semantic-ui-react'
+import { Carousel } from 'react-responsive-carousel'
+import '../carousel.css'
 
 class HomeContainer extends React.Component {
   renderSublets = () => {
     if (this.props.sublets.length > 0) {
-      return this.props.sublets.map((sublet, index) => {
+      return this.props.sublets.map(sublet => {
         return (
-          <Segment key={index} raised>
-            <p>{sublet.name}</p>
-          </Segment>
+          <div key={sublet.id}>
+            <img src={sublet.images[0].url} />
+            <p className="legend">{sublet.name}</p>
+          </div>
         )
       })
     } else {
@@ -21,10 +23,11 @@ class HomeContainer extends React.Component {
 
   render () {
     return (
-      <div>
-        <ImageCarousel />
-        {this.renderSublets()}
-      </div>
+      <Container>
+        <Carousel dynamicHeight infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay>
+          {this.renderSublets()}
+        </Carousel>
+      </Container>
     )
   }
 }
