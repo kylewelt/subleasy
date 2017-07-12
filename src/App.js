@@ -6,7 +6,7 @@ import SubletsAdapter from './adapters/SubletsAdapter'
 
 import NavBarContainer from './containers/NavBarContainer'
 import HomeContainer from './containers/HomeContainer'
-import SubletsContainer from './containers/SubletsContainer'
+import SubletsRouter from './routers/SubletsRouter'
 import UserFormsContainer from './containers/UserFormsContainer'
 
 class App extends Component {
@@ -76,10 +76,10 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route path='/' render={() => <NavBarContainer isLoggedIn={this.state.auth.isLoggedIn} logOut={this.logOut} /> } />
+          <Route path='/' render={() => <NavBarContainer {...this.state} logOut={this.logOut} /> } />
           <Route exact path='/' render={() => <HomeContainer {...this.state} /> } />
-          <Route exact path='/sublets' render={() => {
-            return this.state.auth.isLoggedIn ? <SubletsContainer {...this.state} /> : <Redirect to='/' />
+          <Route path='/sublets' render={() => {
+            return this.state.auth.isLoggedIn ? <SubletsRouter state={this.state} tellAppToFetch={this.getSublets} /> : <Redirect to='/' />
           }} />
           <Route exact path='/login' render={() => {
             return !this.state.auth.isLoggedIn ? <UserFormsContainer logIn={this.logIn}/> : <Redirect to='/' />
