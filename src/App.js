@@ -23,10 +23,6 @@ class App extends Component {
     this.getSublets()
   }
 
-  componentWillUpdate = (nextProps, nextState) => {
-    this.checkAuth()
-  }
-
   checkAuth = () => {
     if (localStorage.getItem('jwt')) {
       AuthAdapter.currentUser()
@@ -80,7 +76,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route path='/' render={() => <NavBarContainer isLoggedIn={this.state.auth.isLoggedIn} /> } />
+          <Route path='/' render={() => <NavBarContainer isLoggedIn={this.state.auth.isLoggedIn} logOut={this.logOut} /> } />
           <Route exact path='/' render={() => <HomeContainer {...this.state} /> } />
           <Route exact path='/sublets' render={() => {
             return this.state.auth.isLoggedIn ? <SubletsContainer {...this.state} /> : <Redirect to='/' />

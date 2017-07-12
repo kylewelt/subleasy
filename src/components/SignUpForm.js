@@ -3,8 +3,8 @@ import { Form } from 'semantic-ui-react'
 
 class SignUpForm extends React.Component {
   state = {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -24,8 +24,8 @@ class SignUpForm extends React.Component {
   render () {
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Input required label='First Name' placeholder='first name' name='firstName' value={this.state.firstName} onChange={this.handleChange} />
-        <Form.Input required label='Last Name' placeholder='last name' name='lastName' value={this.state.lastName} onChange={this.handleChange} />
+        <Form.Input required label='First Name' placeholder='first name' name='first_name' value={this.state.firstName} onChange={this.handleChange} />
+        <Form.Input required label='Last Name' placeholder='last name' name='last_name' value={this.state.lastName} onChange={this.handleChange} />
         <Form.Input required label='Email' placeholder='my_email@example.com' type='email' name='email' value={this.state.email} onChange={this.handleChange} />
         <Form.Input required label='Password' placeholder='password' type='password' name='password' value={this.state.password} onChange={this.handleChange} />
         <Form.Input required label='Confirm Password' placeholder='confirm password' type='password' name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} />

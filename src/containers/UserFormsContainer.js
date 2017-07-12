@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Segment, Header } from 'semantic-ui-react'
 import LogInForm from '../components/LogInForm'
 import SignUpForm from '../components/SignUpForm'
+import UsersAdapter from '../adapters/UsersAdapter'
 
 class UserFormsContainer extends React.Component {
   logIn = (formData) => {
@@ -9,7 +10,10 @@ class UserFormsContainer extends React.Component {
   }
 
   signUp = (formData) => {
-    this.props.signUp(formData)
+    UsersAdapter.createUser(formData)
+      .then(user => {
+        if (!user.errors) {this.props.logIn(formData)}
+      })
   }
 
   render = () => {

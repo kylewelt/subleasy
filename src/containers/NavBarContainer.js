@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
 
 class NavBarContainer extends React.Component {
@@ -18,7 +18,7 @@ class NavBarContainer extends React.Component {
     if (!this.props.isLoggedIn) {
       return <NavLink exact to='/login' activeStyle={{color: 'red'}}>Log In</NavLink>
     } else {
-      return <a >log out</a>
+      return <Link to='/' onClick={this.props.logOut}>Log Out</Link>
     }
   }
 
@@ -31,7 +31,7 @@ class NavBarContainer extends React.Component {
           {this.renderSublets()}
         <Menu.Menu position='right'>
           <Menu.Item>
-            {this.renderLogIn()}}
+            {this.renderLogIn()}
           </Menu.Item>
         </Menu.Menu>
       </Menu>

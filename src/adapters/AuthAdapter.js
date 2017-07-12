@@ -2,7 +2,11 @@ export default class AuthAdapter {
   static logIn = (params) => {
     return fetch('http://localhost:3000/api/v1/auth', {
       method: 'post',
-      body: JSON.stringify(params)
+      body: JSON.stringify(params),
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      }
     }).then(resp => resp.json())
   }
 
@@ -12,7 +16,7 @@ export default class AuthAdapter {
         'content-type': 'application/json',
         'accept': 'application/json',
         'Authorization': localStorage.getItem('jwt')
-      },
+      }
     }).then(resp => resp.json())
   }
 
