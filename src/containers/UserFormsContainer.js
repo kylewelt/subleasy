@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Segment, Header } from 'semantic-ui-react'
+import { Container, Segment, Header, Divider } from 'semantic-ui-react'
 import LogInForm from '../components/LogInForm'
 import SignUpForm from '../components/SignUpForm'
 import UsersAdapter from '../adapters/UsersAdapter'
@@ -23,6 +23,7 @@ class UserFormsContainer extends React.Component {
           <Header as='h1'>Log In</Header>
           <LogInForm logIn={this.logIn} />
         </Segment>
+        <Divider horizontal>Or</Divider>
         <Segment raised>
           <Header as='h1'>Sign Up</Header>
           <SignUpForm signUp={this.signUp} />

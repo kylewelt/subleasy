@@ -19,7 +19,7 @@ class SubletsListContainer extends React.Component {
 
   render() {
     return(
-      <Card.Group>
+      <Card.Group itemsPerRow={3} doubling stackable>
         {this.renderSublets()}
       </Card.Group>
     )

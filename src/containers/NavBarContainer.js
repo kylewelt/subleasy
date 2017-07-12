@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Container, Menu } from 'semantic-ui-react'
 
 class NavBarContainer extends React.Component {
 
@@ -25,15 +25,18 @@ class NavBarContainer extends React.Component {
   render = () => {
     return (
       <Menu>
-        <Menu.Item>
-          <NavLink exact to='/' activeStyle={{color: 'red'}}>Home</NavLink>
-        </Menu.Item>
-          {this.renderSublets()}
-        <Menu.Menu position='right'>
+        <Container>
+          <Menu.Item header>SublEasy</Menu.Item>
           <Menu.Item>
-            {this.renderLogIn()}
+            <NavLink exact to='/' activeStyle={{color: 'red'}}>Home</NavLink>
           </Menu.Item>
-        </Menu.Menu>
+          {this.renderSublets()}
+          <Menu.Menu position='right'>
+            <Menu.Item>
+              {this.renderLogIn()}
+            </Menu.Item>
+          </Menu.Menu>
+        </Container>
       </Menu>
     )
   }
