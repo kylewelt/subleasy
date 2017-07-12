@@ -1,11 +1,11 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Container, Menu } from 'semantic-ui-react'
+import { Dropdown, Container, Menu } from 'semantic-ui-react'
 
 class NavBarContainer extends React.Component {
 
   renderSublets = () => {
-    if (this.props.isLoggedIn) {
+    if (this.props.auth.isLoggedIn) {
       return (
         <Menu.Item>
           <NavLink exact to='/sublets' activeStyle={{color: 'red'}}>Sublets</NavLink>
@@ -15,10 +15,28 @@ class NavBarContainer extends React.Component {
   }
 
   renderLogIn = () => {
-    if (!this.props.isLoggedIn) {
-      return <NavLink exact to='/login' activeStyle={{color: 'red'}}>Log In</NavLink>
+    if (!this.props.auth.isLoggedIn) {
+      return (
+        <Menu.Item>
+          <NavLink exact to='/login' activeStyle={{color: 'red'}}>Log In</NavLink>
+        </Menu.Item>
+      )
     } else {
-      return <Link to='/' onClick={this.props.logOut}>Log Out</Link>
+      return (
+        <Dropdown item text={`Hello, ${this.props.auth.user.firstName}`}>
+          <Dropdown.Menu>
+            <Dropdown.Item as={NavLink} exact to='/user'>
+              Your Profile
+            </Dropdown.Item>
+            <Dropdown.Item as={NavLink} exact to='/sublets/new'>
+              Create a New Sublet
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to='/' onClick={this.props.logOut}>
+              Log Out
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      )
     }
   }
 
@@ -32,9 +50,7 @@ class NavBarContainer extends React.Component {
           </Menu.Item>
           {this.renderSublets()}
           <Menu.Menu position='right'>
-            <Menu.Item>
-              {this.renderLogIn()}
-            </Menu.Item>
+            {this.renderLogIn()}
           </Menu.Menu>
         </Container>
       </Menu>
