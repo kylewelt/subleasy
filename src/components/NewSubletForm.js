@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Image, Icon, Container, Form } from 'semantic-ui-react'
+import { Grid, Card, Image, Icon, Form } from 'semantic-ui-react'
 
 class NewSubletForm extends React.Component {
   state = {
@@ -85,20 +85,20 @@ class NewSubletForm extends React.Component {
 
   render () {
     return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Input required label='Description' placeholder='description' name='first_name' value={this.state.name} onChange={this.handleChange} />
-          <Form.Input required label='Price' placeholder='price per month' type='number' name='last_name' value={this.state.price} onChange={this.handleChange} />
-          <Form.Input required label='Start date' placeholder='' type='date' name='email' value={this.state.email} onChange={this.handleChange} />
-          <Form.Input required label='End date' placeholder='' type='date' name='password' value={this.state.password} onChange={this.handleChange} />
-          <Container>
-            {this.renderImages()}
-          </Container>
-          <Container>
-            <Form.Button content='Sign Up' />
-          </Container>
-        </Form>
-      </Container>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Field>
+          <label>Description</label>
+          <input required placeholder='description' name='name' value={this.state.name} onChange={this.handleChange} />
+          <label>Price</label>
+          <input required placeholder='price per month' type='number' name='price' value={this.state.price} onChange={this.handleChange} />
+          <label>Start date</label>
+          <input required placeholder='' type='date' name='start_date' value={this.state.start_date} onChange={this.handleChange} />
+          <label>End date</label>
+          <input required placeholder='' type='date' name='end_date' value={this.state.end_date} onChange={this.handleChange} />
+        </Form.Field>
+          {this.renderImages()}
+        <Form.Button content='Sign Up' />
+      </Form>
     )
   }
 }
