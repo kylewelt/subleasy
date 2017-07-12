@@ -43,7 +43,7 @@ class SubletFilters extends React.Component {
         </Menu.Item>
         <Menu.Item>
           <Header as='h5'>Max Monthly Rent</Header>
-          <Input fluid label='$' type='number' name='maxPriceFilter' placeholder='max rent' value={this.state.maxPriceFilter} min='0' onChange={this.handleChange} />
+          <Input fluid label='$' type='number' name='maxPriceFilter' placeholder='max rent' value={this.state.maxPriceFilter} min={this.state.minPriceFilter * 1} onChange={this.handleChange} />
         </Menu.Item>
       </Menu>
     )

@@ -28,14 +28,12 @@ class SubletsListContainer extends React.Component {
   }
 
   filterSublets = () => {
-    console.log('max price:', this.props.filters.maxPriceFilter*100)
-    console.log('rent:', this.props.sublets[0].price*1)
     return this.props.sublets.filter((sublet, index) => {
       return (
         this.overFilter(sublet.start_date, this.props.filters.startDateFilter)
         && this.overFilter(sublet.end_date, this.props.filters.endDateFilter)
-        && this.overFilter(sublet.price*1, this.props.filters.minPriceFilter*100)
-        && this.underFilter(sublet.price*1, this.props.filters.maxPriceFilter*100)
+        && this.overFilter(sublet.price * 1, this.props.filters.minPriceFilter * 100)
+        && this.underFilter(sublet.price * 1, this.props.filters.maxPriceFilter * 100)
       )
     })
   }
