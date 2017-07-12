@@ -11,7 +11,10 @@ module Api
         user = User.new(userParams)
         if user.save
           created_jwt = issue_token({id: user.id})
-          render json: {id: user.id, jwt: created_jwt}
+          render json: {
+            id: user.id,
+            jwt: created_jwt
+          }
         else
           render json: {
             error: 'Something went wrong. Please try again.'
