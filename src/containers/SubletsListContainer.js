@@ -4,7 +4,7 @@ import { Card, Loader, Segment } from 'semantic-ui-react'
 
 class SubletsListContainer extends React.Component {
   overFilter = (detail, filter) => {
-    if (filter) {
+    if (filter !== '') {
       if (detail >= filter) {
         return true
       } else {
@@ -16,7 +16,7 @@ class SubletsListContainer extends React.Component {
   }
 
   underFilter = (detail, filter) => {
-    if (filter) {
+    if (filter !== '') {
       if (detail <= filter) {
         return true
       } else {

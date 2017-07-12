@@ -10,7 +10,10 @@ var today = dateFormat(now, 'yyyy-mm-dd')
 class SubletsContainer extends React.Component {
   state= ({
     filters: {
-      startDateFilter: today
+      startDateFilter: today,
+      endDateFilter: '',
+      maxPriceFilter: '',
+      minPriceFilter: ''
     }
   })
 
