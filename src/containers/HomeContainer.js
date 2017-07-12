@@ -6,10 +6,10 @@ import '../carousel.css'
 class HomeContainer extends React.Component {
   renderSublets = () => {
     if (this.props.sublets.length > 0) {
-      return this.props.sublets.map(sublet => {
+      return this.props.sublets.map((sublet, index) => {
         return (
-          <div key={sublet.id}>
-            <img src={sublet.images[0].url} />
+          <div key={index}>
+            <img src={sublet.images[0].url} alt={sublet.name} />
             <p className="legend">{sublet.name}</p>
           </div>
         )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Input, Label, Menu } from 'semantic-ui-react'
+import { Header, Input, Menu } from 'semantic-ui-react'
 
 var dateFormat = require('dateformat')
 var now = new Date();
@@ -16,7 +16,11 @@ class SubletFilters extends React.Component {
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
-    })
+    }, this.sendState)
+  }
+
+  sendState = () => {
+    this.props.onFilter(this.state)
   }
 
   render () {
@@ -31,7 +35,7 @@ class SubletFilters extends React.Component {
         </Menu.Item>
         <Menu.Item>
           <Header as='h5'>Available Until</Header>
-          <Input type='date' fluid name='' value={this.state.endDateFilter} min={this.state.startDateFilter} onChange={this.handleChange} />
+          <Input type='date' fluid name='endDateFilter' value={this.state.endDateFilter} min={this.state.startDateFilter} onChange={this.handleChange} />
         </Menu.Item>
         <Menu.Item>
           <Header as='h5'>Min Monthly Rent</Header>

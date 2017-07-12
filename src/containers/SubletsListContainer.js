@@ -3,13 +3,17 @@ import SubletCard from '../components/SubletCard'
 import { Loader, Card } from 'semantic-ui-react'
 
 class SubletsListContainer extends React.Component {
+  filterSublets = () => {
+    return this.props.sublets.map((sublet, index) => {
+      return (
+        <SubletCard key={index} sublet={sublet}/>
+      )
+    })
+  }
+
   renderSublets = () => {
     if (this.props.sublets.length > 0) {
-      return this.props.sublets.map((sublet, index) => {
-        return (
-          <SubletCard key={index} sublet={sublet}/>
-        )
-      })
+      return this.filterSublets()
     } else {
       return (
         <Loader active>Loading</Loader>
