@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "dateformat": "^2.0.0",
+    "google-map-react": "^0.24.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-responsive-carousel": "^3.1.24",
