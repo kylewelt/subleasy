@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Header, Icon } from 'semantic-ui-react'
+import { Grid, Header, Icon, Label } from 'semantic-ui-react'
 
 var dateFormat = require('dateformat')
 
@@ -8,7 +8,7 @@ class SubletInfo extends React.Component {
   render () {
     return (
       <div>
-        <Header block>Sublet Details</Header>
+        <Label size='large' color='blue' ribbon>Sublet Details</Label>
         <Header as='h1'>{this.props.sublet.name}</Header>
         <Header as='h2'>
           <Icon.Group>

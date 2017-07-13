@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from 'semantic-ui-react'
+import { Header, Label } from 'semantic-ui-react'
 
 var dateFormat = require('dateformat')
 
@@ -9,7 +9,8 @@ class SubletDescription extends React.Component {
     console.log(this.props)
     return (
       <div>
-        <Header block>Sublet Description</Header>
+        <Label size='large' color='blue' ribbon>Sublet Description</Label>
+        <Header></Header>
         <p>{this.props.sublet.description}</p>
       </div>
     )
