@@ -38,7 +38,6 @@ class SubletContainer extends React.Component {
   }
 
   render () {
-    console.log(this.state);
     return (
       <Container>
         <Grid celled>

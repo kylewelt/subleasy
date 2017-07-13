@@ -6,8 +6,12 @@ var dateFormat = require('dateformat')
 class SubletDescription extends React.Component {
 
   render () {
+    console.log(this.props)
     return (
-      <Header>Sublet Description</Header>
+      <div>
+        <Header block>Sublet Description</Header>
+        <p>{this.props.sublet.description}</p>
+      </div>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Dropdown, Container, Menu } from 'semantic-ui-react'
+import { Dropdown, Container, Icon, Menu } from 'semantic-ui-react'
 
 class NavBarContainer extends React.Component {
 
@@ -44,7 +44,10 @@ class NavBarContainer extends React.Component {
     return (
       <Menu>
         <Container>
-          <Menu.Item header>SublEasy</Menu.Item>
+          <Menu.Item header>
+            <Icon bordered inverted color='blue' name='home' />
+            SublEasy
+          </Menu.Item>
           <Menu.Item>
             <NavLink exact to='/' activeStyle={{color: 'red'}}>Home</NavLink>
           </Menu.Item>
