@@ -17,6 +17,9 @@ class SubletInfo extends React.Component {
           {this.props.sublet.price / 100} / month
         </Header>
 
+        <Header sub>Location</Header>
+        <p>{this.props.sublet.location.name}</p>
+
         <Header sub>Listed on</Header>
         <p>{dateFormat(this.props.sublet.created_at, 'mediumDate')}</p>
 
