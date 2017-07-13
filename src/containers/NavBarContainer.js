@@ -7,8 +7,8 @@ class NavBarContainer extends React.Component {
   renderSublets = () => {
     if (this.props.auth.isLoggedIn) {
       return (
-        <Menu.Item>
-          <NavLink exact to='/sublets' activeStyle={{color: 'red'}}>Sublets</NavLink>
+        <Menu.Item as={NavLink} exact to='/sublets' >
+          Sublets
         </Menu.Item>
       )
     }
@@ -17,8 +17,8 @@ class NavBarContainer extends React.Component {
   renderLogIn = () => {
     if (!this.props.auth.isLoggedIn) {
       return (
-        <Menu.Item>
-          <NavLink exact to='/login' activeStyle={{color: 'red'}}>Log In</NavLink>
+        <Menu.Item as={NavLink} exact to='/login'>
+          Log In
         </Menu.Item>
       )
     } else {
@@ -44,12 +44,9 @@ class NavBarContainer extends React.Component {
     return (
       <Menu>
         <Container>
-          <Menu.Item header>
+          <Menu.Item header as={NavLink} exact to='/' >
             <Icon bordered inverted color='blue' name='home' />
             SublEasy
-          </Menu.Item>
-          <Menu.Item>
-            <NavLink exact to='/' activeStyle={{color: 'red'}}>Home</NavLink>
           </Menu.Item>
           {this.renderSublets()}
           <Menu.Menu position='right'>
