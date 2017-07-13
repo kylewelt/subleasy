@@ -7,6 +7,9 @@ class GoogleMap extends React.Component {
     zoom: 11
   }
 
+  componentWillMount() {
+  }
+
   render() {
     return (
       <div style={{width: '100%', height: '400px'}}>

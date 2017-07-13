@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Container } from 'semantic-ui-react'
+import GoogleMap from '../components/GoogleMap'
 import SubletInfo from '../components/SubletInfo'
 import SubletDescription from '../components/SubletDescription'
 import { Carousel } from 'react-responsive-carousel'
@@ -47,7 +48,7 @@ class SubletContainer extends React.Component {
               <SubletDescription sublet={this.state.sublet} />
             </Grid.Column>
             <Grid.Column width={8}>
-              COOL MAP
+              <GoogleMap sublet={this.state.sublet}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
