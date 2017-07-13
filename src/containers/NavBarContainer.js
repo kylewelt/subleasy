@@ -23,7 +23,7 @@ class NavBarContainer extends React.Component {
       )
     } else {
       return (
-        <Dropdown item text={`Hello, ${this.props.auth.user.firstName}`}>
+        <Dropdown item text={`Hello, ${this.props.auth.user.first_name}`}>
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} exact to='/user'>
               Your Profile

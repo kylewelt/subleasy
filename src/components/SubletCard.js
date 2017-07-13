@@ -4,10 +4,17 @@ import { Card, Image, Grid, Header } from 'semantic-ui-react'
 var dateFormat = require('dateformat')
 
 class SubletCard extends React.Component {
+
+  renderImage = () => {
+    if (this.props.sublet.images[0]) {
+      return <Image src={this.props.sublet.images[0].url} alt='Sublet View' />
+    }
+  }
+
   render () {
     return (
       <Card raised>
-        <Image src={this.props.sublet.images[0].url} alt='Sublet View' />
+        {this.renderImage()}
         <Card.Content>
           <Card.Header>
             ${this.props.sublet.price / 100} / month
