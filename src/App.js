@@ -12,7 +12,7 @@ import UserFormsContainer from './containers/UserFormsContainer'
 class App extends Component {
   state = {
     auth: {
-      isLoggedIn: false,
+      isLoggedIn: true,
       user: {}
     },
     sublets: []
