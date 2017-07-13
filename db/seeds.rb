@@ -18,7 +18,7 @@ s.images << Image.create(url: 'https://images.unsplash.com/photo-1466098672325-c
 
 u2 = User.create(first_name: 'Second', last_name: 'People', email: 's@example.com', password: 'dragons')
 
-l2 = Location.create(long: 49.7128, lat: 94.0059)
+l2 = Location.create(lat: 43.7128, long: -76.0059)
 
 s2 = Sublet.create(name: "Random Digz", owner: u2, price: 6000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Sep 1, 2018'), location: l2, description: text)
 
