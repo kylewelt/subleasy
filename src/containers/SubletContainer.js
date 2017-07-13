@@ -7,16 +7,6 @@ import { Carousel } from 'react-responsive-carousel'
 import '../carousel.css'
 
 class SubletContainer extends React.Component {
-  // state = ({
-  //   sublet: {}
-  // })
-  //
-  // componentWillMount = () => {
-  //   const sublet = this.findSublet(this.props)[0]
-  //   this.setState({
-  //     sublet: sublet
-  //   })
-  // }
 
   findSublet = () => {
     return this.props.sublets.filter(sublet => {
@@ -56,7 +46,7 @@ class SubletContainer extends React.Component {
               <SubletDescription sublet={this.findSublet()} />
             </Grid.Column>
             <Grid.Column width={8}>
-              <GoogleMap sublet={this.findSublet()}/>
+              <GoogleMap location={this.findSublet().location}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Card, Image, Icon, Form } from 'semantic-ui-react'
+const geocoder = require('google-geocoder')
 
 class NewSubletForm extends React.Component {
   state = {
@@ -7,6 +8,7 @@ class NewSubletForm extends React.Component {
     price: '',
     start_date: '',
     end_date: '',
+    location: {name: ''},
     images: []
   }
 
@@ -14,6 +16,8 @@ class NewSubletForm extends React.Component {
     let newState = {...this.state}
     if (event.target.name === 'images') {
       newState.images[event.target.dataset.idx][event.target.dataset.key] = event.target.value
+    } else if (event.target.name === 'location') {
+      newState.location.name = event.target.value
     } else {
       newState[event.target.name] = event.target.value
     }
@@ -22,7 +26,26 @@ class NewSubletForm extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    this.props.newSublet(this.state)
+    this.getCoords(this.state)
+  }
+
+  getCoords = (state) => {
+    const geo = geocoder({ key:'AIzaSyBjlJJkNp_63CEmawR3DMj-6Rf0Lw5fbDc'})
+    geo.find(state.location, (err, resp) => {
+      if (err) {
+        console.log(err)
+      } else {
+        let newState = {
+          ...state,
+          location: {
+            ...state.location,
+            lat: resp[0].location.lat,
+            long: resp[0].location.lng
+          }
+        }
+        this.props.newSublet(newState)
+      }
+    })
   }
 
 
@@ -81,8 +104,6 @@ class NewSubletForm extends React.Component {
     )
   }
 
-
-
   render () {
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -95,6 +116,8 @@ class NewSubletForm extends React.Component {
           <input required placeholder='' type='date' name='start_date' value={this.state.start_date} onChange={this.handleChange} />
           <label>End date</label>
           <input required placeholder='' type='date' name='end_date' value={this.state.end_date} onChange={this.handleChange} />
+          <label>Location</label>
+          <input required placeholder='address' name='location' value={this.state.location.name} onChange={this.handleChange} />
         </Form.Field>
           {this.renderImages()}
         <Form.Button content='Submit' />
