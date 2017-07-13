@@ -7,14 +7,14 @@ class GoogleMap extends React.Component {
     map: <Loader active>Loading</Loader>
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.sublet) {
+  componentWillMount() {
+    if (this.props.sublet) {
       this.setState({
         map: (
           <GoogleMapReact
             defaultCenter={{
-              lat: nextProps.sublet.location.lat * 1,
-              lng: nextProps.sublet.location.long * 1
+              lat: this.props.sublet.location.lat * 1,
+              lng: this.props.sublet.location.long * 1
             }}
             defaultZoom={15}
             bootstrapURLKeys={{
@@ -25,8 +25,8 @@ class GoogleMap extends React.Component {
             <Icon
               name='target'
               size='big'
-              lat={nextProps.sublet.location.lat * 1}
-              lng={nextProps.sublet.location.long * 1}
+              lat={this.props.sublet.location.lat * 1}
+              lng={this.props.sublet.location.long * 1}
              />
           </GoogleMapReact>
         )

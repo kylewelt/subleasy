@@ -12,7 +12,7 @@ import UserFormsContainer from './containers/UserFormsContainer'
 class App extends Component {
   state = {
     auth: {
-      isLoggedIn: true,
+      isLoggedIn: false,
       user: {}
     },
     sublets: []
@@ -79,7 +79,7 @@ class App extends Component {
           <Route path='/' render={() => <NavBarContainer {...this.state} logOut={this.logOut} /> } />
           <Route exact path='/' render={() => <HomeContainer {...this.state} /> } />
           <Route path='/sublets' render={() => {
-            return this.state.auth.isLoggedIn ? <SubletsRouter state={this.state} tellAppToFetch={this.getSublets} /> : <Redirect to='/' />
+            return this.state.auth.isLoggedIn ? <SubletsRouter {...this.state} tellAppToFetch={this.getSublets} /> : <Redirect to='/' />
           }} />
           <Route exact path='/login' render={() => {
             return !this.state.auth.isLoggedIn ? <UserFormsContainer logIn={this.logIn}/> : <Redirect to='/' />

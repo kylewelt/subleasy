@@ -7,48 +7,57 @@ import { Carousel } from 'react-responsive-carousel'
 import '../carousel.css'
 
 class SubletContainer extends React.Component {
-  state = ({
-    sublet: {}
-  })
+  // state = ({
+  //   sublet: {}
+  // })
+  //
+  // componentWillMount = () => {
+  //   const sublet = this.findSublet(this.props)[0]
+  //   this.setState({
+  //     sublet: sublet
+  //   })
+  // }
 
-  componentWillReceiveProps = (nextProps) => {
-    this.setSublet(nextProps)
+  findSublet = () => {
+    return this.props.sublets.filter(sublet => {
+      return sublet.id.toString() === this.props.match.params.subletId
+    })[0]
   }
 
-  shouldComponentUpdate = (nextProps, nextState) => {
-    return this.state.sublet !== nextState.sublet
-  }
-
-  findSublet = (props) => {
-    return props.sublets.filter(sublet => {
-      return sublet.id.toString() === props.match.params.subletId
-    })
-  }
-
-  setSublet = (props) => {
-    this.setState({
-      sublet: this.findSublet(props)[0]
-    })
+  renderImages = () => {
+    return (
+      this.findSublet().images.map(image => {
+        return (
+          <div key={image.id}>
+            <img src={image.url} alt={image.url} />
+            <p className="legend">{image.caption}</p>
+          </div>
+        )
+      })
+    )
   }
 
   render () {
+    console.log(this.state);
     return (
       <Container>
         <Grid celled>
           <Grid.Row>
             <Grid.Column width={6}>
-              <SubletInfo sublet={this.state.sublet} />
+              <SubletInfo sublet={this.findSublet()} />
             </Grid.Column>
             <Grid.Column width={10}>
-              {/* <Carousel images={this.state.sublet.images} /> */}
+              <Carousel dynamicHeight infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay>
+                {this.renderImages()}
+              </Carousel>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={8}>
-              <SubletDescription sublet={this.state.sublet} />
+              <SubletDescription sublet={this.findSublet()} />
             </Grid.Column>
             <Grid.Column width={8}>
-              <GoogleMap sublet={this.state.sublet}/>
+              <GoogleMap sublet={this.findSublet()}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

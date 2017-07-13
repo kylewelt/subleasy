@@ -8,9 +8,9 @@ class SubletsRouter extends React.Component {
   render () {
     return (
       <Switch>
-        <Route exact path='/sublets' render={() => <SubletsContainer {...this.props.state} />} />
+        <Route exact path='/sublets' render={() => <SubletsContainer sublets={this.props.sublets} />} />
         <Route exact path='/sublets/new' render={() => <NewSubletContainer tellAppToFetch={this.props.tellAppToFetch} />} />
-        <Route exact path='/sublets/:subletId' render={(props) => <SubletContainer {...this.props.state} {...props} />} />
+        <Route exact path='/sublets/:subletId' render={(props) => <SubletContainer sublets={this.props.sublets} {...props} />} />
       </Switch>
     )
   }
