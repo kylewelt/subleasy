@@ -35,7 +35,8 @@ ActiveRecord::Schema.define(version: 20170712164453) do
   create_table "sublets", force: :cascade do |t|
     t.string "name"
     t.bigint "owner_id"
-    t.decimal "price"
+    t.text "description"
+    t.integer "price"
     t.date "start_date"
     t.date "end_date"
     t.datetime "created_at", null: false
