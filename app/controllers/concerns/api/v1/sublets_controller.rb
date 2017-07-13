@@ -17,7 +17,7 @@ module Api
         if sublet.save
           if params[:images].present?
             params.require(:images).each_with_index do |img, i|
-              img = Image.create(params.require(:images)[i].permit(:url))
+              img = Image.create(params.require(:images)[i].permit(:url, :caption))
               sublet.images << img
             end
           end
@@ -40,7 +40,7 @@ module Api
       private
 
       def subletParams
-        params.require(:sublet).permit(:name, :price, :start_date, :end_date)
+        params.require(:sublet).permit(:name, :price, :start_date, :end_date, :description)
       end
 
     end
