@@ -10,7 +10,6 @@ class NewSubletContainer extends React.Component {
   }
 
   createSublet = (formData) => {
-    debugger
     SubletsAdapter.createSublet(formData)
       .then(sublet => {
         if (!sublet.errors) {
