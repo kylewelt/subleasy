@@ -21,6 +21,7 @@ module Api
               sublet.images << img
             end
           end
+          sublet.location = Location.create(locationParams)
           render json: {
             id: sublet.id
           }
@@ -41,6 +42,10 @@ module Api
 
       def subletParams
         params.require(:sublet).permit(:name, :price, :start_date, :end_date, :description)
+      end
+
+      def locationParams
+        params.require(:location).permit(:name, :long, :lat)
       end
 
     end

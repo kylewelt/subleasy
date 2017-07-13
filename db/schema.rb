@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170712164453) do
   end
 
   create_table "locations", force: :cascade do |t|
+    t.string "name"
     t.decimal "long"
     t.decimal "lat"
     t.bigint "sublet_id"
