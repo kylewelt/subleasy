@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Image, Icon, Form } from 'semantic-ui-react'
+import { TextArea, Grid, Card, Image, Icon, Form } from 'semantic-ui-react'
 const geocoder = require('google-geocoder')
 
 class NewSubletForm extends React.Component {
@@ -8,6 +8,7 @@ class NewSubletForm extends React.Component {
     price: '',
     start_date: '',
     end_date: '',
+    description: '',
     location: {name: ''},
     images: []
   }
@@ -108,16 +109,28 @@ class NewSubletForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
-          <label>Description</label>
-          <input required placeholder='description' name='name' value={this.state.name} onChange={this.handleChange} />
+          <label>Name</label>
+          <input required placeholder='name' name='name' value={this.state.name} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
           <label>Price</label>
           <input required placeholder='price per month' type='number' name='price' value={this.state.price} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
           <label>Start date</label>
           <input required placeholder='' type='date' name='start_date' value={this.state.start_date} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
           <label>End date</label>
           <input required placeholder='' type='date' name='end_date' value={this.state.end_date} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
           <label>Location</label>
           <input required placeholder='address' name='location' value={this.state.location.name} onChange={this.handleChange} />
+        </Form.Field>
+        <Form.Field>
+          <label>Description</label>
+          <TextArea required placeholder='description' type='textarea' name='description' value={this.state.description} onChange={this.handleChange} />
         </Form.Field>
           {this.renderImages()}
         <Form.Button content='Submit' />
