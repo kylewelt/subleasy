@@ -30,35 +30,37 @@ class UserContainer extends React.Component {
     console.log(this.state)
     return(
       <Container>
-        <Card>
-          {this.state.user.profile_image ? <Image src={this.state.user.profile_image.url} />
-            : <Image src='http://www.imran.com/xyper_images/icon-user-default.png' />
-          }
-          <Card.Content>
-            <Card.Header>
-              {this.state.user.first_name} {this.state.user.last_name}
-            </Card.Header>
-            <Card.Meta>
-              <span className='email'>
-                {this.state.user.email}
-              </span>
-            </Card.Meta>
-            {this.state.user.listings ? <Card.Description>
-              Number of listings: {this.state.user.listings.length}
-            </Card.Description>
-            : <Card.Description>
-              You have 0 listings!
-            </Card.Description>
-          }
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name='home' />
-              {this.state.user.sublets ? this.state.user.sublets.length : '0'} Bookmarks
-            </a>
-          </Card.Content>
-        </Card>
-        {this.renderListings()}
+        <Card.Group itemsPerRow={3} doubling stackable>
+          <Card>
+            {this.state.user.profile_image ? <Image src={this.state.user.profile_image.url} />
+              : <Image src='http://www.imran.com/xyper_images/icon-user-default.png' />
+            }
+            <Card.Content>
+              <Card.Header>
+                {this.state.user.first_name} {this.state.user.last_name}
+              </Card.Header>
+              <Card.Meta>
+                <span className='email'>
+                  {this.state.user.email}
+                </span>
+              </Card.Meta>
+              {this.state.user.listings ? <Card.Description>
+                Number of listings: {this.state.user.listings.length}
+              </Card.Description>
+              : <Card.Description>
+                You have 0 listings!
+              </Card.Description>
+            }
+            </Card.Content>
+            <Card.Content extra>
+              <a>
+                <Icon name='home' />
+                {this.state.user.sublets ? this.state.user.sublets.length : '0'} Bookmarks
+              </a>
+            </Card.Content>
+          </Card>
+          {this.renderListings()}
+        </Card.Group>
       </Container>
     )
   }

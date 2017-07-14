@@ -7,6 +7,7 @@ import HomeContainer from './containers/HomeContainer'
 import SubletsRouter from './routers/SubletsRouter'
 import UserFormsContainer from './containers/UserFormsContainer'
 import UserContainer from './containers/UserContainer'
+import Footer from './components/Footer'
 
 class App extends Component {
   state = {
@@ -76,17 +77,20 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route path='/' render={() => <NavBarContainer {...this.state} logOut={this.logOut} /> } />
-          <Route exact path='/' render={() => <HomeContainer {...this.state} /> } />
-          <Route path='/sublets' render={() => {
-            return this.state.auth.isLoggedIn ? <SubletsRouter {...this.state} tellAppToFetch={this.getSublets} /> : <Redirect to='/' />
-          }} />
-          <Route exact path='/login' render={() => {
-            return !this.state.auth.isLoggedIn ? <UserFormsContainer logIn={this.logIn}/> : <Redirect to='/' />
-          }} />
-          <Route exact path='/user' render={() => {
-            return this.state.auth.isLoggedIn ? <UserContainer user={this.state.auth.user} /> : <Redirect to='/' />
-          }} />
+          <div style={{'padding-bottom': 75}}>
+            <Route path='/' render={() => <NavBarContainer {...this.state} logOut={this.logOut} /> } />
+            <Route exact path='/' render={() => <HomeContainer {...this.state} /> } />
+            <Route path='/sublets' render={() => {
+              return this.state.auth.isLoggedIn ? <SubletsRouter {...this.state} tellAppToFetch={this.getSublets} /> : <Redirect to='/' />
+            }} />
+            <Route exact path='/login' render={() => {
+              return !this.state.auth.isLoggedIn ? <UserFormsContainer logIn={this.logIn}/> : <Redirect to='/' />
+            }} />
+            <Route exact path='/user' render={() => {
+              return this.state.auth.isLoggedIn ? <UserContainer user={this.state.auth.user} /> : <Redirect to='/' />
+            }} />
+          </div>
+          <Footer />
         </div>
       </Router>
     )

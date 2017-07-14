@@ -3,7 +3,6 @@ import { Container, Divider, Loader } from 'semantic-ui-react'
 import { Carousel } from 'react-responsive-carousel'
 import '../carousel.css'
 import GuidedSteps from '../components/GuidedSteps'
-import Footer from '../components/Footer'
 
 class HomeContainer extends React.Component {
   renderSublets = () => {
@@ -27,13 +26,12 @@ class HomeContainer extends React.Component {
     return (
       <div>
         <Container>
-          <Carousel dynamicHeight infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay showThumbs={false}>
+          <Carousel useKeyboardArrows dynamicHeight infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay showThumbs={false}>
             {this.renderSublets()}
           </Carousel>
           <Divider />
           <GuidedSteps />
         </Container>
-        <Footer />
       </div>
     )
   }

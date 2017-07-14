@@ -7,7 +7,7 @@ class Footer extends React.Component {
     return (
       <Menu inverted fixed='bottom' >
         <Container centered>
-          <Segment fluid basic inverted textAlign='center' padded='very'>
+          <Segment fluid basic inverted textAlign='center' >
             SublEasy · © 2017 · Made In NYC · Created at Flatiron School
           </Segment>
         </Container>
