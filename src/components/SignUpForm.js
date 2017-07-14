@@ -29,7 +29,7 @@ class SignUpForm extends React.Component {
         <Form.Input required label='Email' placeholder='my_email@example.com' type='email' name='email' value={this.state.email} onChange={this.handleChange} />
         <Form.Input required label='Password' placeholder='password' type='password' name='password' value={this.state.password} onChange={this.handleChange} />
         <Form.Input required label='Confirm Password' placeholder='confirm password' type='password' name='confirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} />
-        <Form.Button content='Sign Up' />
+        <Form.Button content='Sign Up' color='blue' />
       </Form>
     )
   }

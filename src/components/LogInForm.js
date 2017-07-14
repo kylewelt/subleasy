@@ -23,7 +23,7 @@ class LogInForm extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Input required label='Email' placeholder='my_email@example.com' type='email' name='email' value={this.state.email} onChange={this.handleChange} />
         <Form.Input required label='Password' placeholder='password' type='password' name='password' value={this.state.password} onChange={this.handleChange} />
-        <Form.Button content='Log In' />
+        <Form.Button content='Log In' color='blue' />
       </Form>
     )
   }

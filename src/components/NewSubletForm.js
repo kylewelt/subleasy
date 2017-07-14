@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextArea, Grid, Card, Image, Icon, Form } from 'semantic-ui-react'
+import { TextArea, Grid, Card, Image, Icon, Form, Button } from 'semantic-ui-react'
 const geocoder = require('google-geocoder')
 
 class NewSubletForm extends React.Component {
@@ -42,7 +42,8 @@ class NewSubletForm extends React.Component {
             ...state.location,
             lat: resp[0].location.lat,
             long: resp[0].location.lng
-          }
+          },
+          price: state.price * 100
         }
         this.props.newSublet(newState)
       }
@@ -93,9 +94,9 @@ class NewSubletForm extends React.Component {
           )
         })}
         <Grid.Row>
-          <Card onClick={this.addInput} raised centered>
-            <Card.Content>
-              <Card.Header>
+          <Card onClick={this.addInput} raised centered >
+            <Card.Content as={Button}>
+              <Card.Header >
                 Add New Image
               </Card.Header>
             </Card.Content>
@@ -133,7 +134,7 @@ class NewSubletForm extends React.Component {
           <TextArea required placeholder='description' type='textarea' name='description' value={this.state.description} onChange={this.handleChange} />
         </Form.Field>
           {this.renderImages()}
-        <Form.Button content='Submit' />
+        <Form.Button content='Submit' color='blue' />
       </Form>
     )
   }

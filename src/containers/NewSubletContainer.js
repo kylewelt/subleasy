@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
+import { Header, Container } from 'semantic-ui-react'
 import NewSubletForm from '../components/NewSubletForm'
 import SubletsAdapter from '../adapters/SubletsAdapter'
 
@@ -21,13 +21,13 @@ class NewSubletContainer extends React.Component {
 
   redirect = () => {
     if (this.state.subletId) {return <Redirect to='/' />}
-    // if (this.state.subletId) {return <Redirect to={`/sublets/${this.state.sublet_id}`} />}
   }
 
   render = () => {
     return (
       <Container>
         {this.redirect()}
+        <Header as='h1'>New listing </Header>
         <NewSubletForm newSublet={this.createSublet}/>
       </Container>
     )
