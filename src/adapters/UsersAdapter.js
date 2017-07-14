@@ -10,4 +10,14 @@ export default class UsersAdapter {
     }).then(resp => resp.json())
   }
 
+  static getUser = (id) => {
+    return fetch(`http://localhost:3000/api/v1/users/${id}`, {
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': localStorage.getItem('jwt')
+      }
+    }).then(resp => resp.json())
+  }
+
 }

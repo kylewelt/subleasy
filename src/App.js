@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
-
 import AuthAdapter from './adapters/AuthAdapter'
 import SubletsAdapter from './adapters/SubletsAdapter'
-
 import NavBarContainer from './containers/NavBarContainer'
 import HomeContainer from './containers/HomeContainer'
 import SubletsRouter from './routers/SubletsRouter'
 import UserFormsContainer from './containers/UserFormsContainer'
+import UserContainer from './containers/UserContainer'
 
 class App extends Component {
   state = {
@@ -84,6 +83,9 @@ class App extends Component {
           }} />
           <Route exact path='/login' render={() => {
             return !this.state.auth.isLoggedIn ? <UserFormsContainer logIn={this.logIn}/> : <Redirect to='/' />
+          }} />
+          <Route exact path='/user' render={() => {
+            return this.state.auth.isLoggedIn ? <UserContainer user={this.state.auth.user} /> : <Redirect to='/' />
           }} />
         </div>
       </Router>
