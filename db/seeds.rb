@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-text = "I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. I am a string. "
+text = "Spacious, elegant, and majestic, this enormous 2125 sqft apartment features marble counter tops, Viking stainless steel appliances, bamboo floors and cabinets, deluxe bathrooms, featuring standing glass showers and beautiful soaking tub options, walk-in closets, and sweeping views of the Hudson River. Just as exquisite as it is practical, this gorgeous apartment is the epitome of Manhattan real estate heaven!"
 
 u = User.create(first_name: 'Carl', last_name: 'Person', email: 'c@example.com', password: 'dragons')
 
