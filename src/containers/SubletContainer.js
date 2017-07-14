@@ -7,7 +7,6 @@ import { Carousel } from 'react-responsive-carousel'
 import '../carousel.css'
 
 class SubletContainer extends React.Component {
-
   findSublet = () => {
     return this.props.sublets.filter(sublet => {
       return sublet.id.toString() === this.props.match.params.subletId

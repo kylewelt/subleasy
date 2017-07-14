@@ -4,6 +4,20 @@ import { Grid, Header, Icon, Label } from 'semantic-ui-react'
 var dateFormat = require('dateformat')
 
 class SubletInfo extends React.Component {
+  state = {
+    liked: false,
+    heartSize: ['tiny', 'small', 'large', 'big', 'huge', 'massive'],
+    clickCount: 0,
+    spinThatShit: false
+  }
+
+  handleClick = () => {
+    this.setState({
+      liked: true,
+      clickCount: this.state.clickCount > 4 ? 5 : this.state.clickCount + 1,
+      spinThatShit: this.state.clickCount === 5 ? true : false
+    })
+  }
 
   render () {
     return (
@@ -35,6 +49,7 @@ class SubletInfo extends React.Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        {!this.state.liked ? <Icon onClick={this.handleClick} size={this.state.heartSize[this.state.clickCount]} name="empty heart" /> : <Icon onClick={this.handleClick} size={this.state.heartSize[this.state.clickCount]} color="red" name="heart" loading={this.state.spinThatShit}/> }
       </div>
     )
   }
