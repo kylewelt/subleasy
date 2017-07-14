@@ -27,7 +27,7 @@ class NewSubletContainer extends React.Component {
     return (
       <Container>
         {this.redirect()}
-        <Header as='h1'>New listing </Header>
+        <Header as='h1'>Create New Listing </Header>
         <NewSubletForm newSublet={this.createSublet}/>
       </Container>
     )

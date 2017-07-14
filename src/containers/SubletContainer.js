@@ -35,7 +35,7 @@ class SubletContainer extends React.Component {
               <SubletInfo sublet={this.findSublet()} />
             </Grid.Column>
             <Grid.Column width={10}>
-              <Carousel useKeyboardArrows dynamicHeight infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay>
+              <Carousel useKeyboardArrows infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay>
                 {this.renderImages()}
               </Carousel>
             </Grid.Column>

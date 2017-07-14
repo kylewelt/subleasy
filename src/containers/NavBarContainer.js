@@ -29,7 +29,7 @@ class NavBarContainer extends React.Component {
               Your Profile
             </Dropdown.Item>
             <Dropdown.Item as={NavLink} exact to='/sublets/new'>
-              Create a New Sublet
+              Create New Listing
             </Dropdown.Item>
             <Dropdown.Item as={Link} to='/' onClick={this.props.logOut}>
               Log Out

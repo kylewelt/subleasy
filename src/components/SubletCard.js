@@ -21,7 +21,7 @@ class SubletCard extends React.Component {
               ${this.props.sublet.price / 100} / month
             </Card.Header>
             <Card.Meta>
-              Listed on {dateFormat(this.props.sublet.created_at, 'mediumDate')}
+              {this.props.sublet.location.name}
             </Card.Meta>
             <Grid columns={2} padded='vertically' divided>
               <Grid.Row>
@@ -35,9 +35,14 @@ class SubletCard extends React.Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid>
-            <Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <Header as='h3'>
               {this.props.sublet.name}
-            </Card.Description>
+            </Header>
+            <Card.Meta>
+              Listed on {dateFormat(this.props.sublet.created_at, 'mediumDate')}
+            </Card.Meta>
           </Card.Content>
         </Card>
     )
