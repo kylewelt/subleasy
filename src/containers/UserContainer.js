@@ -27,7 +27,6 @@ class UserContainer extends React.Component {
   }
   }
   render() {
-    console.log(this.state)
     return(
       <Container>
         <Card.Group itemsPerRow={3} doubling stackable>

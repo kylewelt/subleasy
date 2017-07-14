@@ -4,7 +4,6 @@ import GoogleMapReact from 'google-map-react'
 
 class GoogleMap extends React.Component {
   render() {
-    console.log(this.props.location);
     return (
       <div style={{width: '100%', height: '400px'}}>
         <GoogleMapReact

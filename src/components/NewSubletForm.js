@@ -33,9 +33,7 @@ class NewSubletForm extends React.Component {
   getCoords = (state) => {
     const geo = geocoder({ key:'AIzaSyBjlJJkNp_63CEmawR3DMj-6Rf0Lw5fbDc'})
     geo.find(state.location.name, (err, resp) => {
-      if (err) {
-        console.log(err)
-      } else {
+      if (!err) {
         let newState = {
           ...state,
           location: {
