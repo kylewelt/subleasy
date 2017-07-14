@@ -38,9 +38,20 @@ class SubletsListContainer extends React.Component {
     })
   }
 
+  searchSublets = () => {
+    const searchTerms = this.props.filters.searchFilter.split(', ')
+    return this.filterSublets().filter(function(sublet) {
+      for (let i = 0; i < searchTerms.length; i++) {
+        return sublet.description.toLowerCase().includes(searchTerms[i].toLowerCase())
+        || sublet.name.toLowerCase().includes(searchTerms[i].toLowerCase())
+      }
+    })
+  }
+
   renderSublets = () => {
+    this.filterSublets()
     if (this.props.sublets.length > 0) {
-      return this.filterSublets().map((sublet, index) => {
+      return this.searchSublets().map((sublet, index) => {
         return (
           <SubletCard key={index} sublet={sublet}/>
         )

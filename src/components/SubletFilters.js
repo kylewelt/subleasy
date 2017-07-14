@@ -10,7 +10,8 @@ class SubletFilters extends React.Component {
     startDateFilter: '',
     endDateFilter: '',
     minPriceFilter:'',
-    maxPriceFilter: ''
+    maxPriceFilter: '',
+    searchFilter: ''
   }
 
   handleChange = (event) => {
@@ -44,6 +45,11 @@ class SubletFilters extends React.Component {
         <Menu.Item>
           <Header as='h5'>Max Monthly Rent</Header>
           <Input fluid label='$' type='number' name='maxPriceFilter' placeholder='max rent' value={this.state.maxPriceFilter} min={this.state.minPriceFilter * 1} onChange={this.handleChange} />
+        </Menu.Item>
+        <Menu.Item>
+          <Header as='h5'>Keyword Search</Header>
+          <Input fluid icon='search' type='text' name='searchFilter' placeholder='keywords' value={this.state.searchFilter} onChange={this.handleChange} />
+          <p>Separate keywords with a comma.</p>
         </Menu.Item>
       </Menu>
     )
