@@ -73,6 +73,7 @@ class App extends Component {
   }
 
   render = () => {
+    console.log('render', this.state.auth.isLoggedIn)
     return (
       <Router>
         <div>

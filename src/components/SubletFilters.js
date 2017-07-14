@@ -49,6 +49,7 @@ class SubletFilters extends React.Component {
         <Menu.Item>
           <Header as='h5'>Keyword Search</Header>
           <Input fluid icon='search' type='text' name='searchFilter' placeholder='keywords' value={this.state.searchFilter} onChange={this.handleChange} />
+          <br />
           <p>Separate keywords with a comma.</p>
         </Menu.Item>
       </Menu>
