@@ -4,6 +4,10 @@ _SubLeasy_ is a personal apartment finder tool, inspired by the popular web appl
 ## Technologies In Use
 - [react](https://github.com/facebook/react)
 - [react-router](https://github.com/ReactTraining/react-router)
+- [rails](https://github.com/rails/rails)
+- [bcrypt](https://github.com/codahale/bcrypt-ruby)
+- [rack-cors](https://github.com/cyu/rack-cors)
+- [active\_model\_serializers](https://github.com/rails-api/active_model_serializers)
 - [semantic-ui-react](https://github.com/Semantic-Org/Semantic-UI-React)
 - [geocoder](https://github.com/wyattdanger/geocoder)
 - [google-map-react](https://github.com/istarkov/google-map-react)
