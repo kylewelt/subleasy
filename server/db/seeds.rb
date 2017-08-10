@@ -15,19 +15,19 @@ br = [
   'https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg',
   'https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg',
   'https://images.pexels.com/photos/90319/pexels-photo-90319.jpeg',
-  'https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg',
-  'https://images.pexels.com/photos/29683/pexels-photo-29683.jpg',
+  'https://images.pexels.com/photos/276671/pexels-photo-276671.jpeg',
+  'https://images.pexels.com/photos/4217/hotel-bed-bedroom-room.jpg',
   'https://images.pexels.com/photos/271695/pexels-photo-271695.jpeg'
 ]
 
 lr = [
-  'https://images.pexels.com/photos/243148/pexels-photo-243148.jpeg',
+  'https://images.pexels.com/photos/276715/pexels-photo-276715.jpeg',
   'https://images.pexels.com/photos/245208/pexels-photo-245208.jpeg',
-  'https://images.pexels.com/photos/265579/pexels-photo-265579.jpeg',
+  'https://images.pexels.com/photos/271660/pexels-photo-271660.jpeg',
   'https://images.pexels.com/photos/77931/pexels-photo-77931.jpeg',
   'https://images.pexels.com/photos/279607/pexels-photo-279607.jpeg',
-  'https://images.pexels.com/photos/311398/pexels-photo-311398.jpeg',
-  'https://images.pexels.com/photos/299629/pexels-photo-299629.jpeg',
+  'https://images.pexels.com/photos/276663/pexels-photo-276663.jpeg',
+  'https://images.pexels.com/photos/276696/pexels-photo-276696.jpeg',
   'https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg'
 ]
 
@@ -37,7 +37,7 @@ kr = [
   'https://images.pexels.com/photos/94865/pexels-photo-94865.jpeg',
   'https://images.pexels.com/photos/259828/pexels-photo-259828.jpeg',
   'https://images.pexels.com/photos/100575/pexels-photo-100575.jpeg',
-  'https://images.pexels.com/photos/265578/pexels-photo-265578.jpeg',
+  'https://images.pexels.com/photos/271647/pexels-photo-271647.jpeg',
   'https://images.pexels.com/photos/271762/pexels-photo-271762.jpeg',
   'https://images.pexels.com/photos/276651/pexels-photo-276651.jpeg'
 ]
@@ -64,42 +64,42 @@ loc = [
   Location.create(lat: 40.7127, long: -74.0057)
 ]
 
-s0 = Sublet.create(name: "Cool Digz", owner: users[0], price: 80000, start_date: Date.parse('Aug 1, 2017'), end_date: Date.parse('Oct 1, 2017'), location: loc[0], description: desc[0])
+s0 = Sublet.create(name: "Cool Digs", owner: users[0], price: 80000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Oct 1, 2017'), location: loc[0], description: desc[0])
 s0.images << Image.create(url: br[0], caption: "Bedroom")
 s0.images << Image.create(url: lr[0], caption: "Living Room")
 s0.images << Image.create(url: kr[0], caption: "Kitchen")
 
-s1 = Sublet.create(name: "Concrete Jungle", owner: users[1], price: 100000, start_date: Date.parse('Aug 1, 2017'), end_date: Date.parse('Nov 1, 2017'), location: loc[1], description: desc[1])
+s1 = Sublet.create(name: "Minimalist Design", owner: users[1], price: 100000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Nov 1, 2017'), location: loc[1], description: desc[1])
 s1.images << Image.create(url: br[1], caption: "Bedroom")
 s1.images << Image.create(url: lr[1], caption: "Living Room")
 s1.images << Image.create(url: kr[1], caption: "Kitchen")
 
-s2 = Sublet.create(name: "Modern Living", owner: users[2], price: 60000, start_date: Date.parse('Aug 1, 2017'), end_date: Date.parse('Dec 1, 2017'), location: loc[2], description: desc[2])
+s2 = Sublet.create(name: "Modern Living", owner: users[2], price: 60000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Dec 1, 2017'), location: loc[2], description: desc[2])
 s2.images << Image.create(url: br[2], caption: "Bedroom")
 s2.images << Image.create(url: lr[2], caption: "Living Room")
 s2.images << Image.create(url: kr[2], caption: "Kitchen")
 
-s3 = Sublet.create(name: "Bougie AF", owner: users[3], price: 120000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Oct 1, 2017'), location: loc[3], description: desc[3])
+s3 = Sublet.create(name: "Heart of the City", owner: users[3], price: 120000, start_date: Date.parse('Oct 1, 2017'), end_date: Date.parse('Nov 1, 2017'), location: loc[3], description: desc[3])
 s3.images << Image.create(url: br[3], caption: "Bedroom")
 s3.images << Image.create(url: lr[3], caption: "Living Room")
 s3.images << Image.create(url: kr[3], caption: "Kitchen")
 
-s4 = Sublet.create(name: "Party Down", owner: users[4], price: 95000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Nov 1, 2017'), location: loc[4], description: desc[4])
+s4 = Sublet.create(name: "Downtown Life", owner: users[4], price: 95000, start_date: Date.parse('Oct 1, 2017'), end_date: Date.parse('Dec 1, 2017'), location: loc[4], description: desc[4])
 s4.images << Image.create(url: br[4], caption: "Bedroom")
 s4.images << Image.create(url: lr[4], caption: "Living Room")
 s4.images << Image.create(url: kr[4], caption: "Kitchen")
 
-s5 = Sublet.create(name: "Get Some", owner: users[5], price: 750000, start_date: Date.parse('Sep 1, 2017'), end_date: Date.parse('Dec 1, 2017'), location: loc[5], description: desc[5])
+s5 = Sublet.create(name: "Won't Last Long", owner: users[5], price: 750000, start_date: Date.parse('Oct 1, 2017'), end_date: Date.parse('Jan 1, 2018'), location: loc[5], description: desc[5])
 s5.images << Image.create(url: br[5], caption: "Bedroom")
 s5.images << Image.create(url: lr[5], caption: "Living Room")
 s5.images << Image.create(url: kr[5], caption: "Kitchen")
 
-s6 = Sublet.create(name: "So Cool", owner: users[6], price: 95000, start_date: Date.parse('Oct 1, 2017'), end_date: Date.parse('Dec 1, 2017'), location: loc[6], description: desc[6])
+s6 = Sublet.create(name: "Cool & Contemporary", owner: users[6], price: 95000, start_date: Date.parse('Nov 1, 2017'), end_date: Date.parse('Dec 1, 2017'), location: loc[6], description: desc[6])
 s6.images << Image.create(url: br[6], caption: "Bedroom")
 s6.images << Image.create(url: lr[6], caption: "Living Room")
 s6.images << Image.create(url: kr[6], caption: "Kitchen")
 
-s7 = Sublet.create(name: "Summer Fun", owner: users[7], price: 75000, start_date: Date.parse('Oct 1, 2017'), end_date: Date.parse('Jan 1, 2018'), location: loc[7], description: desc[7])
+s7 = Sublet.create(name: "Summer Fun", owner: users[7], price: 75000, start_date: Date.parse('Nov 1, 2017'), end_date: Date.parse('Jan 1, 2018'), location: loc[7], description: desc[7])
 s7.images << Image.create(url: br[7], caption: "Bedroom")
 s7.images << Image.create(url: lr[7], caption: "Living Room")
 s7.images << Image.create(url: kr[7], caption: "Kitchen")

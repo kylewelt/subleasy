@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Label } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 
 class SubletDescription extends React.Component {
 
@@ -7,7 +7,6 @@ class SubletDescription extends React.Component {
     return (
       <div>
         <Label size='large' color='blue' ribbon>Sublet Description</Label>
-        <Header></Header>
         <p>{this.props.sublet.description}</p>
       </div>
     )
