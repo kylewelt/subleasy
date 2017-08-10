@@ -26,7 +26,7 @@ class HomeContainer extends React.Component {
     return (
       <div>
         <Container>
-          <Carousel useKeyboardArrows dynamicHeight infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay showThumbs={false}>
+          <Carousel useKeyboardArrows infiniteLoop swipeScrollTolerance={1} interval={3000} autoPlay showThumbs={false}>
             {this.renderSublets()}
           </Carousel>
           <Divider />

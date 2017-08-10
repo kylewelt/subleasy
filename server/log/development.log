@@ -1,0 +1,1374 @@
+  [1m[35m (4.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (16.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (140.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_development"[0m
+  [1m[35m (188.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_test"[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4709995827031202925);[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170711144039)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (26.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "password_digest" character varying, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144039"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSublets (20170711144229)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "sublets" ("id" bigserial primary key, "name" character varying, "owner_id" bigint, "description" text, "price" integer, "start_date" date, "end_date" date, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_sublets_on_owner_id" ON "sublets"  ("owner_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144229"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLocations (20170711145022)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.3ms)[0m  [1m[35mCREATE TABLE "locations" ("id" bigserial primary key, "name" character varying, "long" decimal, "lat" decimal, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8012a3fd47"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_locations_on_sublet_id" ON "locations"  ("sublet_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711145022"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateImages (20170712164453)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "images" ("id" bigserial primary key, "url" character varying, "caption" character varying, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_927b1df53b"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_images_on_sublet_id" ON "images"  ("sublet_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170712164453"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-08-10 14:07:14.869367"], ["updated_at", "2017-08-10 14:07:14.869367"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4709995827031202925)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Adam"], ["last_name", "Adamsson"], ["password_digest", "$2a$10$EB3gb3PtqSBksGw31my4.eOZ6HmDp95zLU3FGkhCqyBjH3xt989ly"], ["email", "a@example.com"], ["created_at", "2017-08-10 14:07:22.754169"], ["updated_at", "2017-08-10 14:07:22.754169"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Brian"], ["last_name", "Briansson"], ["password_digest", "$2a$10$BPEDRd5.40r.7pW5Ue5Dk.P77rrmTNG43q8dBlG1sCOZeoCqv1vWq"], ["email", "b@example.com"], ["created_at", "2017-08-10 14:07:22.823366"], ["updated_at", "2017-08-10 14:07:22.823366"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Carl"], ["last_name", "Carlsson"], ["password_digest", "$2a$10$49uwKrgECm7Y9ohm/Sjs5.zw30G22czu3qwZC2hdGucdCphkru0kS"], ["email", "c@example.com"], ["created_at", "2017-08-10 14:07:22.891566"], ["updated_at", "2017-08-10 14:07:22.891566"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Darren"], ["last_name", "Darrensson"], ["password_digest", "$2a$10$Si2lf.4I08gVKjhiqy7/bOL2Ohv29v0SBY0Ojyokh3sbSvheMZR6C"], ["email", "d@example.com"], ["created_at", "2017-08-10 14:07:22.960031"], ["updated_at", "2017-08-10 14:07:22.960031"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Elrod"], ["last_name", "Elrodsson"], ["password_digest", "$2a$10$MfD1z4gT7yBqwWvmUsQz..OcQt5otoyrXf8Sg4eoevuru32VEwebW"], ["email", "e@example.com"], ["created_at", "2017-08-10 14:07:23.027895"], ["updated_at", "2017-08-10 14:07:23.027895"]]
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Frank"], ["last_name", "Franksson"], ["password_digest", "$2a$10$txGp22OYXx7TF6vKmEnzFuCd2kraJa0E7q0PYMf3DwvJr3N4ofeXK"], ["email", "f@example.com"], ["created_at", "2017-08-10 14:07:23.096839"], ["updated_at", "2017-08-10 14:07:23.096839"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "George"], ["last_name", "Georgesson"], ["password_digest", "$2a$10$MOBuEdyJ1mv5Pd2SyxwZtetMmUaTWvmXkUwUdyA9X/N5bekTTmq96"], ["email", "g@example.com"], ["created_at", "2017-08-10 14:07:23.165303"], ["updated_at", "2017-08-10 14:07:23.165303"]]
+  [1m[35m (2.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Harold"], ["last_name", "Haroldsson"], ["password_digest", "$2a$10$8T/o3pO91Xme5wjFdcMviOdjlDSk5RXVJme4Z0OV25MASq5JG/WGS"], ["email", "h@example.com"], ["created_at", "2017-08-10 14:07:23.234809"], ["updated_at", "2017-08-10 14:07:23.234809"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Cool Digz"], ["owner_id", 1], ["description", "Spacious, elegant, and majestic, this enormous apartment features marble counter tops, Viking stainless steel appliances, bamboo floors and cabinets, deluxe bathrooms, featuring standing glass showers and beautiful soaking tub options, walk-in closets, and sweeping views. Just as exquisite as it is practical, this gorgeous apartment is the epitome of real estate heaven!"], ["price", 80000], ["start_date", "2017-08-01"], ["end_date", "2017-10-01"], ["created_at", "2017-08-10 14:07:23.293768"], ["updated_at", "2017-08-10 14:07:23.293768"]]
+  [1m[35mSQL (12.2ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.005"], ["lat", "40.712"], ["sublet_id", 1], ["created_at", "2017-08-10 14:07:23.297962"], ["updated_at", "2017-08-10 14:07:23.297962"]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg"], ["caption", "Bedroom"], ["sublet_id", 1], ["created_at", "2017-08-10 14:07:23.342420"], ["updated_at", "2017-08-10 14:07:23.342420"]]
+  [1m[35m (5.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/243148/pexels-photo-243148.jpeg"], ["caption", "Living Room"], ["sublet_id", 1], ["created_at", "2017-08-10 14:07:23.352357"], ["updated_at", "2017-08-10 14:07:23.352357"]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273822/pexels-photo-273822.jpeg"], ["caption", "Kitchen"], ["sublet_id", 1], ["created_at", "2017-08-10 14:07:23.361826"], ["updated_at", "2017-08-10 14:07:23.361826"]]
+  [1m[35m (5.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Concrete Jungle"], ["owner_id", 2], ["description", "This apartment combines light, quiet, and space in a way rarely found. Studio living at includes a boutique style unit with high ceilings, hardwood floors, and an oversize bathroom. State of the art appliances and custom cabinetry deliver a chic New York style. Most importantly, living here makes you a part of our community. Our amenities and tenant events turn your rental into a home."], ["price", 100000], ["start_date", "2017-08-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:07:23.369820"], ["updated_at", "2017-08-10 14:07:23.369820"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0051"], ["lat", "40.7121"], ["sublet_id", 2], ["created_at", "2017-08-10 14:07:23.371740"], ["updated_at", "2017-08-10 14:07:23.371740"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.unsplash.com/photo-1466098672325-c9ddda4b7975"], ["caption", "Bedroom"], ["sublet_id", 2], ["created_at", "2017-08-10 14:07:23.380396"], ["updated_at", "2017-08-10 14:07:23.380396"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/245208/pexels-photo-245208.jpeg"], ["caption", "Living Room"], ["sublet_id", 2], ["created_at", "2017-08-10 14:07:23.383493"], ["updated_at", "2017-08-10 14:07:23.383493"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273843/pexels-photo-273843.jpeg"], ["caption", "Kitchen"], ["sublet_id", 2], ["created_at", "2017-08-10 14:07:23.386601"], ["updated_at", "2017-08-10 14:07:23.386601"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Modern Living"], ["owner_id", 3], ["description", "Recently renovated, these well-lit units feature unique barnwood-style plank flooring and stainless steel appliances along with a balcony or private terrace in most units. Amenities include a newly renovated lobby with a seating area and fireplace, 24-hour doorman, redesigned top floor amenities including a state-of-the-art fitness center, residents lounge with billiards and catering kitchen, and an on-site garage. Laundry is located on every floor and in some select units, pets are welcome!"], ["price", 60000], ["start_date", "2017-08-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:07:23.389386"], ["updated_at", "2017-08-10 14:07:23.389386"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0052"], ["lat", "40.7122"], ["sublet_id", 3], ["created_at", "2017-08-10 14:07:23.390821"], ["updated_at", "2017-08-10 14:07:23.390821"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg"], ["caption", "Bedroom"], ["sublet_id", 3], ["created_at", "2017-08-10 14:07:23.394458"], ["updated_at", "2017-08-10 14:07:23.394458"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/265579/pexels-photo-265579.jpeg"], ["caption", "Living Room"], ["sublet_id", 3], ["created_at", "2017-08-10 14:07:23.397681"], ["updated_at", "2017-08-10 14:07:23.397681"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/94865/pexels-photo-94865.jpeg"], ["caption", "Kitchen"], ["sublet_id", 3], ["created_at", "2017-08-10 14:07:23.400893"], ["updated_at", "2017-08-10 14:07:23.400893"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Bougie AF"], ["owner_id", 4], ["description", "Condo quality finishes in this double exposure (south and west) alcove studio. With natural hardwood strip flooring, soaring ceilings and an open layout, this is where you want to come home. A full sized washer and dryer, top-of-the-line stainless steel appliances, including a dishwasher and microwave. The kitchen also has custom Italian satin finish cabinetry with soft-close features. The bathroom is surprisingly spacious with a deep soaking tub and built-in grooming station. This intelligently designed apartment has floor-to-ceiling windows and unbeatable closets. Will fit a king sized bed plus additional furniture."], ["price", 120000], ["start_date", "2017-09-01"], ["end_date", "2017-10-01"], ["created_at", "2017-08-10 14:07:23.403074"], ["updated_at", "2017-08-10 14:07:23.403074"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0053"], ["lat", "40.7123"], ["sublet_id", 4], ["created_at", "2017-08-10 14:07:23.404145"], ["updated_at", "2017-08-10 14:07:23.404145"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg"], ["caption", "Bedroom"], ["sublet_id", 4], ["created_at", "2017-08-10 14:07:23.407614"], ["updated_at", "2017-08-10 14:07:23.407614"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/77931/pexels-photo-77931.jpeg"], ["caption", "Living Room"], ["sublet_id", 4], ["created_at", "2017-08-10 14:07:23.410742"], ["updated_at", "2017-08-10 14:07:23.410742"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/259828/pexels-photo-259828.jpeg"], ["caption", "Kitchen"], ["sublet_id", 4], ["created_at", "2017-08-10 14:07:23.413695"], ["updated_at", "2017-08-10 14:07:23.413695"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Party Down"], ["owner_id", 5], ["description", "Stunning & fully renovated large 3BR in the heart of Gramercy Park. A separate kitchen includes stainless steel appliances with new granite counter tops and cabinets. In addition to the kitchen, the bathroom is also completely gut renovated with marble tile, a new shower bath, and beautiful vanity. The bedrooms all fit a queen size beds! Enjoy recessed lighting throughout this unit. Walk to shopping, cafes, nightlife, and Gramercy Park! Washer/Dryer inside your apartment for Laundry! Newly renovated building."], ["price", 95000], ["start_date", "2017-09-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:07:23.416117"], ["updated_at", "2017-08-10 14:07:23.416117"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0054"], ["lat", "40.7124"], ["sublet_id", 5], ["created_at", "2017-08-10 14:07:23.417341"], ["updated_at", "2017-08-10 14:07:23.417341"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/90319/pexels-photo-90319.jpeg"], ["caption", "Bedroom"], ["sublet_id", 5], ["created_at", "2017-08-10 14:07:23.420796"], ["updated_at", "2017-08-10 14:07:23.420796"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279607/pexels-photo-279607.jpeg"], ["caption", "Living Room"], ["sublet_id", 5], ["created_at", "2017-08-10 14:07:23.424181"], ["updated_at", "2017-08-10 14:07:23.424181"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/100575/pexels-photo-100575.jpeg"], ["caption", "Kitchen"], ["sublet_id", 5], ["created_at", "2017-08-10 14:07:23.427465"], ["updated_at", "2017-08-10 14:07:23.427465"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Get Some"], ["owner_id", 6], ["description", "Stunning & fully renovated large apartment. Elevator Building! Brand new kitchen includes all new high end modern appliances, custom marble counter tops, & white/grey cabinets. Sunny, Bright, & Spacious this apartment boasts a charming atmosphere with crown moldings and condo finishes. The bathroom is also completely gut renovated with marble tile, a new shower with euro glass, and beautiful vanity. The bedrooms; 1 fits a KING size bed and the other fits a queen size bed. The bedrooms also feature large closets, and there is another closet in the foyer. Enjoy recessed lighting throughout this unit."], ["price", 750000], ["start_date", "2017-09-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:07:23.429603"], ["updated_at", "2017-08-10 14:07:23.429603"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0055"], ["lat", "40.7125"], ["sublet_id", 6], ["created_at", "2017-08-10 14:07:23.430920"], ["updated_at", "2017-08-10 14:07:23.430920"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg"], ["caption", "Bedroom"], ["sublet_id", 6], ["created_at", "2017-08-10 14:07:23.434341"], ["updated_at", "2017-08-10 14:07:23.434341"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/311398/pexels-photo-311398.jpeg"], ["caption", "Living Room"], ["sublet_id", 6], ["created_at", "2017-08-10 14:07:23.437103"], ["updated_at", "2017-08-10 14:07:23.437103"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/265578/pexels-photo-265578.jpeg"], ["caption", "Kitchen"], ["sublet_id", 6], ["created_at", "2017-08-10 14:07:23.440073"], ["updated_at", "2017-08-10 14:07:23.440073"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "So Cool"], ["owner_id", 7], ["description", "NO FEE!!! OPEN CITY VIEWS - Flex two bedroom, one bathroom. 24 HR doorman, live in super, elevator - gorgeous building, close to shops, major transportation and parks. Large renovated kitchen with all new appliances. ample closet space, renovated bathroom, living room is facing 30th street -very bright and open . Large entry hallway. This is a must see apartment!"], ["price", 95000], ["start_date", "2017-10-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:07:23.442504"], ["updated_at", "2017-08-10 14:07:23.442504"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0056"], ["lat", "40.7126"], ["sublet_id", 7], ["created_at", "2017-08-10 14:07:23.444314"], ["updated_at", "2017-08-10 14:07:23.444314"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/29683/pexels-photo-29683.jpg"], ["caption", "Bedroom"], ["sublet_id", 7], ["created_at", "2017-08-10 14:07:23.448002"], ["updated_at", "2017-08-10 14:07:23.448002"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/299629/pexels-photo-299629.jpeg"], ["caption", "Living Room"], ["sublet_id", 7], ["created_at", "2017-08-10 14:07:23.451263"], ["updated_at", "2017-08-10 14:07:23.451263"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271762/pexels-photo-271762.jpeg"], ["caption", "Kitchen"], ["sublet_id", 7], ["created_at", "2017-08-10 14:07:23.454072"], ["updated_at", "2017-08-10 14:07:23.454072"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Summer Fun"], ["owner_id", 8], ["description", "Enormous apartment with great sunlight! Elevator building! Huge apartment so big currently being used by 4 roommates! Flex 4BR or Big 3BR! Rents fast. Steps to cafes, restaurants, and best nightlife. "], ["price", 75000], ["start_date", "2017-10-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:07:23.456148"], ["updated_at", "2017-08-10 14:07:23.456148"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0057"], ["lat", "40.7127"], ["sublet_id", 8], ["created_at", "2017-08-10 14:07:23.457236"], ["updated_at", "2017-08-10 14:07:23.457236"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271695/pexels-photo-271695.jpeg"], ["caption", "Bedroom"], ["sublet_id", 8], ["created_at", "2017-08-10 14:07:23.460852"], ["updated_at", "2017-08-10 14:07:23.460852"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg"], ["caption", "Living Room"], ["sublet_id", 8], ["created_at", "2017-08-10 14:07:23.464031"], ["updated_at", "2017-08-10 14:07:23.464031"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276651/pexels-photo-276651.jpeg"], ["caption", "Kitchen"], ["sublet_id", 8], ["created_at", "2017-08-10 14:07:23.467288"], ["updated_at", "2017-08-10 14:07:23.467288"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:09:02 -0400
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:09:03 -0400
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::SubletsController#index as */*
+Processing by Api::V1::AuthController#show as JSON
+  Parameters: {"auth"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSublet Load (1.0ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.13ms)
+Completed 200 OK in 50ms (Views: 13.9ms | ActiveRecord: 10.2ms)
+
+
+[active_model_serializers]   [1m[36mLocation Load (0.7ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.8ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (1.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (83.45ms)
+Completed 200 OK in 146ms (Views: 98.8ms | ActiveRecord: 35.7ms)
+
+
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (148.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_development"[0m
+  [1m[35m (148.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_test"[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4709995827031202925);[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170711144039)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "password_digest" character varying, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144039"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSublets (20170711144229)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "sublets" ("id" bigserial primary key, "name" character varying, "owner_id" bigint, "description" text, "price" integer, "start_date" date, "end_date" date, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_sublets_on_owner_id" ON "sublets"  ("owner_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144229"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLocations (20170711145022)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "locations" ("id" bigserial primary key, "name" character varying, "long" decimal, "lat" decimal, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8012a3fd47"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_locations_on_sublet_id" ON "locations"  ("sublet_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711145022"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateImages (20170712164453)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "images" ("id" bigserial primary key, "url" character varying, "caption" character varying, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_927b1df53b"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_images_on_sublet_id" ON "images"  ("sublet_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170712164453"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-08-10 14:12:54.690113"], ["updated_at", "2017-08-10 14:12:54.690113"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4709995827031202925)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Adam"], ["last_name", "Adamsson"], ["password_digest", "$2a$10$/IOKHp/X20TS6kzOEPjdCuhG7ZbkOkLWyWew/fGNsmBkkG8tGifrq"], ["email", "a@example.com"], ["created_at", "2017-08-10 14:12:59.918838"], ["updated_at", "2017-08-10 14:12:59.918838"]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Brian"], ["last_name", "Briansson"], ["password_digest", "$2a$10$2k3uJNV1GVRUvVRFaDQOd.Da9hC0kyDiwIbkAHGM3CZoDxDZ3A.yW"], ["email", "b@example.com"], ["created_at", "2017-08-10 14:12:59.994980"], ["updated_at", "2017-08-10 14:12:59.994980"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Carl"], ["last_name", "Carlsson"], ["password_digest", "$2a$10$ex9eJyWCiYkVKaXqN/AdtuD9HHOKq1CgHg/6U0fIxZuW41QCmOgpe"], ["email", "c@example.com"], ["created_at", "2017-08-10 14:13:00.060947"], ["updated_at", "2017-08-10 14:13:00.060947"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Darren"], ["last_name", "Darrensson"], ["password_digest", "$2a$10$9mXtxGIBpoAm0YpdTubCL.t4PgwVpvZ0bhcTBNz1hHJoUhRVLc0W."], ["email", "d@example.com"], ["created_at", "2017-08-10 14:13:00.129372"], ["updated_at", "2017-08-10 14:13:00.129372"]]
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Elrod"], ["last_name", "Elrodsson"], ["password_digest", "$2a$10$V6I0iobMupLpXHvUsLnAE.lRwUyVsc.r5.cdYhrYpwh5.nJZtJCGK"], ["email", "e@example.com"], ["created_at", "2017-08-10 14:13:00.201093"], ["updated_at", "2017-08-10 14:13:00.201093"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Frank"], ["last_name", "Franksson"], ["password_digest", "$2a$10$4BzmrUUl9uo18cLmVwsboOqMTeiOrIXJFBSOKzSJvYnbX1waF795e"], ["email", "f@example.com"], ["created_at", "2017-08-10 14:13:00.267179"], ["updated_at", "2017-08-10 14:13:00.267179"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "George"], ["last_name", "Georgesson"], ["password_digest", "$2a$10$Ld2iIVuOi7QPToKfmbeHIuMwezF28.bSiORKsusn4rr9ZBB2JTSMa"], ["email", "g@example.com"], ["created_at", "2017-08-10 14:13:00.336155"], ["updated_at", "2017-08-10 14:13:00.336155"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Harold"], ["last_name", "Haroldsson"], ["password_digest", "$2a$10$ho69T5LDIGpbS4PS..RSmeOm.97EzOgIGQWkrP4KAOkdHnmRIU8Pu"], ["email", "h@example.com"], ["created_at", "2017-08-10 14:13:00.402087"], ["updated_at", "2017-08-10 14:13:00.402087"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Cool Digz"], ["owner_id", 1], ["description", "Spacious, elegant, and majestic, this enormous apartment features marble counter tops, Viking stainless steel appliances, bamboo floors and cabinets, deluxe bathrooms, featuring standing glass showers and beautiful soaking tub options, walk-in closets, and sweeping views. Just as exquisite as it is practical, this gorgeous apartment is the epitome of real estate heaven!"], ["price", 80000], ["start_date", "2017-09-01"], ["end_date", "2017-10-01"], ["created_at", "2017-08-10 14:13:00.454539"], ["updated_at", "2017-08-10 14:13:00.454539"]]
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.005"], ["lat", "40.712"], ["sublet_id", 1], ["created_at", "2017-08-10 14:13:00.456593"], ["updated_at", "2017-08-10 14:13:00.456593"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg"], ["caption", "Bedroom"], ["sublet_id", 1], ["created_at", "2017-08-10 14:13:00.480886"], ["updated_at", "2017-08-10 14:13:00.480886"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/243148/pexels-photo-243148.jpeg"], ["caption", "Living Room"], ["sublet_id", 1], ["created_at", "2017-08-10 14:13:00.485216"], ["updated_at", "2017-08-10 14:13:00.485216"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273822/pexels-photo-273822.jpeg"], ["caption", "Kitchen"], ["sublet_id", 1], ["created_at", "2017-08-10 14:13:00.488413"], ["updated_at", "2017-08-10 14:13:00.488413"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Concrete Jungle"], ["owner_id", 2], ["description", "This apartment combines light, quiet, and space in a way rarely found. Studio living at includes a boutique style unit with high ceilings, hardwood floors, and an oversize bathroom. State of the art appliances and custom cabinetry deliver a chic New York style. Most importantly, living here makes you a part of our community. Our amenities and tenant events turn your rental into a home."], ["price", 100000], ["start_date", "2017-09-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:13:00.491120"], ["updated_at", "2017-08-10 14:13:00.491120"]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0051"], ["lat", "40.7121"], ["sublet_id", 2], ["created_at", "2017-08-10 14:13:00.492583"], ["updated_at", "2017-08-10 14:13:00.492583"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.unsplash.com/photo-1466098672325-c9ddda4b7975"], ["caption", "Bedroom"], ["sublet_id", 2], ["created_at", "2017-08-10 14:13:00.496872"], ["updated_at", "2017-08-10 14:13:00.496872"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/245208/pexels-photo-245208.jpeg"], ["caption", "Living Room"], ["sublet_id", 2], ["created_at", "2017-08-10 14:13:00.500439"], ["updated_at", "2017-08-10 14:13:00.500439"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273843/pexels-photo-273843.jpeg"], ["caption", "Kitchen"], ["sublet_id", 2], ["created_at", "2017-08-10 14:13:00.503930"], ["updated_at", "2017-08-10 14:13:00.503930"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Modern Living"], ["owner_id", 3], ["description", "Recently renovated, these well-lit units feature unique barnwood-style plank flooring and stainless steel appliances along with a balcony or private terrace in most units. Amenities include a newly renovated lobby with a seating area and fireplace, 24-hour doorman, redesigned top floor amenities including a state-of-the-art fitness center, residents lounge with billiards and catering kitchen, and an on-site garage. Laundry is located on every floor and in some select units, pets are welcome!"], ["price", 60000], ["start_date", "2017-09-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:13:00.506556"], ["updated_at", "2017-08-10 14:13:00.506556"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0052"], ["lat", "40.7122"], ["sublet_id", 3], ["created_at", "2017-08-10 14:13:00.507947"], ["updated_at", "2017-08-10 14:13:00.507947"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg"], ["caption", "Bedroom"], ["sublet_id", 3], ["created_at", "2017-08-10 14:13:00.511447"], ["updated_at", "2017-08-10 14:13:00.511447"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/265579/pexels-photo-265579.jpeg"], ["caption", "Living Room"], ["sublet_id", 3], ["created_at", "2017-08-10 14:13:00.514341"], ["updated_at", "2017-08-10 14:13:00.514341"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/94865/pexels-photo-94865.jpeg"], ["caption", "Kitchen"], ["sublet_id", 3], ["created_at", "2017-08-10 14:13:00.517400"], ["updated_at", "2017-08-10 14:13:00.517400"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Bougie AF"], ["owner_id", 4], ["description", "Condo quality finishes in this double exposure (south and west) alcove studio. With natural hardwood strip flooring, soaring ceilings and an open layout, this is where you want to come home. A full sized washer and dryer, top-of-the-line stainless steel appliances, including a dishwasher and microwave. The kitchen also has custom Italian satin finish cabinetry with soft-close features. The bathroom is surprisingly spacious with a deep soaking tub and built-in grooming station. This intelligently designed apartment has floor-to-ceiling windows and unbeatable closets. Will fit a king sized bed plus additional furniture."], ["price", 120000], ["start_date", "2017-10-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:13:00.520160"], ["updated_at", "2017-08-10 14:13:00.520160"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0053"], ["lat", "40.7123"], ["sublet_id", 4], ["created_at", "2017-08-10 14:13:00.521720"], ["updated_at", "2017-08-10 14:13:00.521720"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg"], ["caption", "Bedroom"], ["sublet_id", 4], ["created_at", "2017-08-10 14:13:00.525213"], ["updated_at", "2017-08-10 14:13:00.525213"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/77931/pexels-photo-77931.jpeg"], ["caption", "Living Room"], ["sublet_id", 4], ["created_at", "2017-08-10 14:13:00.528724"], ["updated_at", "2017-08-10 14:13:00.528724"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/259828/pexels-photo-259828.jpeg"], ["caption", "Kitchen"], ["sublet_id", 4], ["created_at", "2017-08-10 14:13:00.532414"], ["updated_at", "2017-08-10 14:13:00.532414"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Party Down"], ["owner_id", 5], ["description", "Stunning & fully renovated large 3BR in the heart of Gramercy Park. A separate kitchen includes stainless steel appliances with new granite counter tops and cabinets. In addition to the kitchen, the bathroom is also completely gut renovated with marble tile, a new shower bath, and beautiful vanity. The bedrooms all fit a queen size beds! Enjoy recessed lighting throughout this unit. Walk to shopping, cafes, nightlife, and Gramercy Park! Washer/Dryer inside your apartment for Laundry! Newly renovated building."], ["price", 95000], ["start_date", "2017-10-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:13:00.540389"], ["updated_at", "2017-08-10 14:13:00.540389"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0054"], ["lat", "40.7124"], ["sublet_id", 5], ["created_at", "2017-08-10 14:13:00.541876"], ["updated_at", "2017-08-10 14:13:00.541876"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/90319/pexels-photo-90319.jpeg"], ["caption", "Bedroom"], ["sublet_id", 5], ["created_at", "2017-08-10 14:13:00.546201"], ["updated_at", "2017-08-10 14:13:00.546201"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279607/pexels-photo-279607.jpeg"], ["caption", "Living Room"], ["sublet_id", 5], ["created_at", "2017-08-10 14:13:00.549920"], ["updated_at", "2017-08-10 14:13:00.549920"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/100575/pexels-photo-100575.jpeg"], ["caption", "Kitchen"], ["sublet_id", 5], ["created_at", "2017-08-10 14:13:00.552982"], ["updated_at", "2017-08-10 14:13:00.552982"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Get Some"], ["owner_id", 6], ["description", "Stunning & fully renovated large apartment. Elevator Building! Brand new kitchen includes all new high end modern appliances, custom marble counter tops, & white/grey cabinets. Sunny, Bright, & Spacious this apartment boasts a charming atmosphere with crown moldings and condo finishes. The bathroom is also completely gut renovated with marble tile, a new shower with euro glass, and beautiful vanity. The bedrooms; 1 fits a KING size bed and the other fits a queen size bed. The bedrooms also feature large closets, and there is another closet in the foyer. Enjoy recessed lighting throughout this unit."], ["price", 750000], ["start_date", "2017-10-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:13:00.555564"], ["updated_at", "2017-08-10 14:13:00.555564"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0055"], ["lat", "40.7125"], ["sublet_id", 6], ["created_at", "2017-08-10 14:13:00.557196"], ["updated_at", "2017-08-10 14:13:00.557196"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg"], ["caption", "Bedroom"], ["sublet_id", 6], ["created_at", "2017-08-10 14:13:00.560902"], ["updated_at", "2017-08-10 14:13:00.560902"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/311398/pexels-photo-311398.jpeg"], ["caption", "Living Room"], ["sublet_id", 6], ["created_at", "2017-08-10 14:13:00.564461"], ["updated_at", "2017-08-10 14:13:00.564461"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/265578/pexels-photo-265578.jpeg"], ["caption", "Kitchen"], ["sublet_id", 6], ["created_at", "2017-08-10 14:13:00.568009"], ["updated_at", "2017-08-10 14:13:00.568009"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "So Cool"], ["owner_id", 7], ["description", "NO FEE!!! OPEN CITY VIEWS - Flex two bedroom, one bathroom. 24 HR doorman, live in super, elevator - gorgeous building, close to shops, major transportation and parks. Large renovated kitchen with all new appliances. ample closet space, renovated bathroom, living room is facing 30th street -very bright and open . Large entry hallway. This is a must see apartment!"], ["price", 95000], ["start_date", "2017-11-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:13:00.570728"], ["updated_at", "2017-08-10 14:13:00.570728"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0056"], ["lat", "40.7126"], ["sublet_id", 7], ["created_at", "2017-08-10 14:13:00.572220"], ["updated_at", "2017-08-10 14:13:00.572220"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/29683/pexels-photo-29683.jpg"], ["caption", "Bedroom"], ["sublet_id", 7], ["created_at", "2017-08-10 14:13:00.576139"], ["updated_at", "2017-08-10 14:13:00.576139"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/299629/pexels-photo-299629.jpeg"], ["caption", "Living Room"], ["sublet_id", 7], ["created_at", "2017-08-10 14:13:00.579735"], ["updated_at", "2017-08-10 14:13:00.579735"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271762/pexels-photo-271762.jpeg"], ["caption", "Kitchen"], ["sublet_id", 7], ["created_at", "2017-08-10 14:13:00.582723"], ["updated_at", "2017-08-10 14:13:00.582723"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Summer Fun"], ["owner_id", 8], ["description", "Enormous apartment with great sunlight! Elevator building! Huge apartment so big currently being used by 4 roommates! Flex 4BR or Big 3BR! Rents fast. Steps to cafes, restaurants, and best nightlife. "], ["price", 75000], ["start_date", "2017-11-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:13:00.585271"], ["updated_at", "2017-08-10 14:13:00.585271"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0057"], ["lat", "40.7127"], ["sublet_id", 8], ["created_at", "2017-08-10 14:13:00.586660"], ["updated_at", "2017-08-10 14:13:00.586660"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271695/pexels-photo-271695.jpeg"], ["caption", "Bedroom"], ["sublet_id", 8], ["created_at", "2017-08-10 14:13:00.590130"], ["updated_at", "2017-08-10 14:13:00.590130"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg"], ["caption", "Living Room"], ["sublet_id", 8], ["created_at", "2017-08-10 14:13:00.593615"], ["updated_at", "2017-08-10 14:13:00.593615"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276651/pexels-photo-276651.jpeg"], ["caption", "Kitchen"], ["sublet_id", 8], ["created_at", "2017-08-10 14:13:00.597115"], ["updated_at", "2017-08-10 14:13:00.597115"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:13:32 -0400
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:13:32 -0400
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (4.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::AuthController#show as JSON
+Processing by Api::V1::SubletsController#index as */*
+  Parameters: {"auth"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSublet Load (1.4ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.13ms)
+Completed 200 OK in 37ms (Views: 3.7ms | ActiveRecord: 9.3ms)
+
+
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.5ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (68.36ms)
+Completed 200 OK in 125ms (Views: 76.6ms | ActiveRecord: 38.1ms)
+
+
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (172.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_development"[0m
+  [1m[35m (174.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_test"[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4709995827031202925);[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170711144039)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "password_digest" character varying, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144039"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSublets (20170711144229)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "sublets" ("id" bigserial primary key, "name" character varying, "owner_id" bigint, "description" text, "price" integer, "start_date" date, "end_date" date, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_sublets_on_owner_id" ON "sublets"  ("owner_id")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144229"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLocations (20170711145022)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "locations" ("id" bigserial primary key, "name" character varying, "long" decimal, "lat" decimal, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8012a3fd47"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_locations_on_sublet_id" ON "locations"  ("sublet_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711145022"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateImages (20170712164453)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "images" ("id" bigserial primary key, "url" character varying, "caption" character varying, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_927b1df53b"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_images_on_sublet_id" ON "images"  ("sublet_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170712164453"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-08-10 14:21:15.715494"], ["updated_at", "2017-08-10 14:21:15.715494"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(4709995827031202925)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Adam"], ["last_name", "Adamsson"], ["password_digest", "$2a$10$mkJE/5nWXGnb.ltEa9NPa.2bcoGUoK4INYuiXQ7i/.S9aoEnQcv4a"], ["email", "a@example.com"], ["created_at", "2017-08-10 14:21:20.843834"], ["updated_at", "2017-08-10 14:21:20.843834"]]
+  [1m[35m (5.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Brian"], ["last_name", "Briansson"], ["password_digest", "$2a$10$JS.Hu6HI1WX1LCUJVnuuTuO/NtWcKQKwB9CsiBhtXNuoX3KpEGEme"], ["email", "b@example.com"], ["created_at", "2017-08-10 14:21:20.914473"], ["updated_at", "2017-08-10 14:21:20.914473"]]
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Carl"], ["last_name", "Carlsson"], ["password_digest", "$2a$10$eITiYIHOJJkQp7fHPaUrIeTxKrUj5AY24WN3e17H52Pim4ELrMbAm"], ["email", "c@example.com"], ["created_at", "2017-08-10 14:21:20.983755"], ["updated_at", "2017-08-10 14:21:20.983755"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Darren"], ["last_name", "Darrensson"], ["password_digest", "$2a$10$MlVBIxB.dR7hQ1Z55EVjK.n3YGr4Ei0TIl8ZE7cqOJ3cw39JxpxkO"], ["email", "d@example.com"], ["created_at", "2017-08-10 14:21:21.051278"], ["updated_at", "2017-08-10 14:21:21.051278"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Elrod"], ["last_name", "Elrodsson"], ["password_digest", "$2a$10$YxdkjC.jmchAmygq9mYTteuLfZiHyw0vMQsYB4ZFsg8o7/B4QSyIG"], ["email", "e@example.com"], ["created_at", "2017-08-10 14:21:21.119093"], ["updated_at", "2017-08-10 14:21:21.119093"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Frank"], ["last_name", "Franksson"], ["password_digest", "$2a$10$ubjt.PvopEY4QNVU2GhdBOz4yLnooiUMJkqXSOcgT9vS4UHZ1rl2i"], ["email", "f@example.com"], ["created_at", "2017-08-10 14:21:21.187577"], ["updated_at", "2017-08-10 14:21:21.187577"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "George"], ["last_name", "Georgesson"], ["password_digest", "$2a$10$G.3MXpBxDEBkAXtyEU.d7ez4K9zxQ11H411gqEw8WeTC4mOVbtgie"], ["email", "g@example.com"], ["created_at", "2017-08-10 14:21:21.255820"], ["updated_at", "2017-08-10 14:21:21.255820"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Harold"], ["last_name", "Haroldsson"], ["password_digest", "$2a$10$DZopn6pJBBKPgsQWLvUx0O2XSWBeHWFKQ6coK8O/crDjEstWwnJny"], ["email", "h@example.com"], ["created_at", "2017-08-10 14:21:21.323631"], ["updated_at", "2017-08-10 14:21:21.323631"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Cool Digz"], ["owner_id", 1], ["description", "Spacious, elegant, and majestic, this enormous apartment features marble counter tops, Viking stainless steel appliances, bamboo floors and cabinets, deluxe bathrooms, featuring standing glass showers and beautiful soaking tub options, walk-in closets, and sweeping views. Just as exquisite as it is practical, this gorgeous apartment is the epitome of real estate heaven!"], ["price", 80000], ["start_date", "2017-09-01"], ["end_date", "2017-10-01"], ["created_at", "2017-08-10 14:21:21.372628"], ["updated_at", "2017-08-10 14:21:21.372628"]]
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.005"], ["lat", "40.712"], ["sublet_id", 1], ["created_at", "2017-08-10 14:21:21.375318"], ["updated_at", "2017-08-10 14:21:21.375318"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg"], ["caption", "Bedroom"], ["sublet_id", 1], ["created_at", "2017-08-10 14:21:21.399063"], ["updated_at", "2017-08-10 14:21:21.399063"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276715/pexels-photo-276715.jpeg"], ["caption", "Living Room"], ["sublet_id", 1], ["created_at", "2017-08-10 14:21:21.403225"], ["updated_at", "2017-08-10 14:21:21.403225"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273822/pexels-photo-273822.jpeg"], ["caption", "Kitchen"], ["sublet_id", 1], ["created_at", "2017-08-10 14:21:21.406778"], ["updated_at", "2017-08-10 14:21:21.406778"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Concrete Jungle"], ["owner_id", 2], ["description", "This apartment combines light, quiet, and space in a way rarely found. Studio living at includes a boutique style unit with high ceilings, hardwood floors, and an oversize bathroom. State of the art appliances and custom cabinetry deliver a chic New York style. Most importantly, living here makes you a part of our community. Our amenities and tenant events turn your rental into a home."], ["price", 100000], ["start_date", "2017-09-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:21:21.409856"], ["updated_at", "2017-08-10 14:21:21.409856"]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0051"], ["lat", "40.7121"], ["sublet_id", 2], ["created_at", "2017-08-10 14:21:21.411362"], ["updated_at", "2017-08-10 14:21:21.411362"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.unsplash.com/photo-1466098672325-c9ddda4b7975"], ["caption", "Bedroom"], ["sublet_id", 2], ["created_at", "2017-08-10 14:21:21.420513"], ["updated_at", "2017-08-10 14:21:21.420513"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/245208/pexels-photo-245208.jpeg"], ["caption", "Living Room"], ["sublet_id", 2], ["created_at", "2017-08-10 14:21:21.424613"], ["updated_at", "2017-08-10 14:21:21.424613"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273843/pexels-photo-273843.jpeg"], ["caption", "Kitchen"], ["sublet_id", 2], ["created_at", "2017-08-10 14:21:21.428138"], ["updated_at", "2017-08-10 14:21:21.428138"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Modern Living"], ["owner_id", 3], ["description", "Recently renovated, these well-lit units feature unique barnwood-style plank flooring and stainless steel appliances along with a balcony or private terrace in most units. Amenities include a newly renovated lobby with a seating area and fireplace, 24-hour doorman, redesigned top floor amenities including a state-of-the-art fitness center, residents lounge with billiards and catering kitchen, and an on-site garage. Laundry is located on every floor and in some select units, pets are welcome!"], ["price", 60000], ["start_date", "2017-09-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:21:21.430782"], ["updated_at", "2017-08-10 14:21:21.430782"]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0052"], ["lat", "40.7122"], ["sublet_id", 3], ["created_at", "2017-08-10 14:21:21.432066"], ["updated_at", "2017-08-10 14:21:21.432066"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg"], ["caption", "Bedroom"], ["sublet_id", 3], ["created_at", "2017-08-10 14:21:21.436212"], ["updated_at", "2017-08-10 14:21:21.436212"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271660/pexels-photo-271660.jpeg"], ["caption", "Living Room"], ["sublet_id", 3], ["created_at", "2017-08-10 14:21:21.439437"], ["updated_at", "2017-08-10 14:21:21.439437"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/94865/pexels-photo-94865.jpeg"], ["caption", "Kitchen"], ["sublet_id", 3], ["created_at", "2017-08-10 14:21:21.442953"], ["updated_at", "2017-08-10 14:21:21.442953"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Bougie AF"], ["owner_id", 4], ["description", "Condo quality finishes in this double exposure (south and west) alcove studio. With natural hardwood strip flooring, soaring ceilings and an open layout, this is where you want to come home. A full sized washer and dryer, top-of-the-line stainless steel appliances, including a dishwasher and microwave. The kitchen also has custom Italian satin finish cabinetry with soft-close features. The bathroom is surprisingly spacious with a deep soaking tub and built-in grooming station. This intelligently designed apartment has floor-to-ceiling windows and unbeatable closets. Will fit a king sized bed plus additional furniture."], ["price", 120000], ["start_date", "2017-10-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:21:21.445540"], ["updated_at", "2017-08-10 14:21:21.445540"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0053"], ["lat", "40.7123"], ["sublet_id", 4], ["created_at", "2017-08-10 14:21:21.446836"], ["updated_at", "2017-08-10 14:21:21.446836"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg"], ["caption", "Bedroom"], ["sublet_id", 4], ["created_at", "2017-08-10 14:21:21.450532"], ["updated_at", "2017-08-10 14:21:21.450532"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/77931/pexels-photo-77931.jpeg"], ["caption", "Living Room"], ["sublet_id", 4], ["created_at", "2017-08-10 14:21:21.454297"], ["updated_at", "2017-08-10 14:21:21.454297"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/259828/pexels-photo-259828.jpeg"], ["caption", "Kitchen"], ["sublet_id", 4], ["created_at", "2017-08-10 14:21:21.457851"], ["updated_at", "2017-08-10 14:21:21.457851"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Party Down"], ["owner_id", 5], ["description", "Stunning & fully renovated large 3BR in the heart of Gramercy Park. A separate kitchen includes stainless steel appliances with new granite counter tops and cabinets. In addition to the kitchen, the bathroom is also completely gut renovated with marble tile, a new shower bath, and beautiful vanity. The bedrooms all fit a queen size beds! Enjoy recessed lighting throughout this unit. Walk to shopping, cafes, nightlife, and Gramercy Park! Washer/Dryer inside your apartment for Laundry! Newly renovated building."], ["price", 95000], ["start_date", "2017-10-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:21:21.460768"], ["updated_at", "2017-08-10 14:21:21.460768"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0054"], ["lat", "40.7124"], ["sublet_id", 5], ["created_at", "2017-08-10 14:21:21.462163"], ["updated_at", "2017-08-10 14:21:21.462163"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/90319/pexels-photo-90319.jpeg"], ["caption", "Bedroom"], ["sublet_id", 5], ["created_at", "2017-08-10 14:21:21.465779"], ["updated_at", "2017-08-10 14:21:21.465779"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279607/pexels-photo-279607.jpeg"], ["caption", "Living Room"], ["sublet_id", 5], ["created_at", "2017-08-10 14:21:21.469218"], ["updated_at", "2017-08-10 14:21:21.469218"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/100575/pexels-photo-100575.jpeg"], ["caption", "Kitchen"], ["sublet_id", 5], ["created_at", "2017-08-10 14:21:21.472811"], ["updated_at", "2017-08-10 14:21:21.472811"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Get Some"], ["owner_id", 6], ["description", "Stunning & fully renovated large apartment. Elevator Building! Brand new kitchen includes all new high end modern appliances, custom marble counter tops, & white/grey cabinets. Sunny, Bright, & Spacious this apartment boasts a charming atmosphere with crown moldings and condo finishes. The bathroom is also completely gut renovated with marble tile, a new shower with euro glass, and beautiful vanity. The bedrooms; 1 fits a KING size bed and the other fits a queen size bed. The bedrooms also feature large closets, and there is another closet in the foyer. Enjoy recessed lighting throughout this unit."], ["price", 750000], ["start_date", "2017-10-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:21:21.475650"], ["updated_at", "2017-08-10 14:21:21.475650"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0055"], ["lat", "40.7125"], ["sublet_id", 6], ["created_at", "2017-08-10 14:21:21.477414"], ["updated_at", "2017-08-10 14:21:21.477414"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276671/pexels-photo-276671.jpeg"], ["caption", "Bedroom"], ["sublet_id", 6], ["created_at", "2017-08-10 14:21:21.481396"], ["updated_at", "2017-08-10 14:21:21.481396"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276663/pexels-photo-276663.jpeg"], ["caption", "Living Room"], ["sublet_id", 6], ["created_at", "2017-08-10 14:21:21.484989"], ["updated_at", "2017-08-10 14:21:21.484989"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271647/pexels-photo-271647.jpeg"], ["caption", "Kitchen"], ["sublet_id", 6], ["created_at", "2017-08-10 14:21:21.488533"], ["updated_at", "2017-08-10 14:21:21.488533"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "So Cool"], ["owner_id", 7], ["description", "NO FEE!!! OPEN CITY VIEWS - Flex two bedroom, one bathroom. 24 HR doorman, live in super, elevator - gorgeous building, close to shops, major transportation and parks. Large renovated kitchen with all new appliances. ample closet space, renovated bathroom, living room is facing 30th street -very bright and open . Large entry hallway. This is a must see apartment!"], ["price", 95000], ["start_date", "2017-11-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:21:21.491287"], ["updated_at", "2017-08-10 14:21:21.491287"]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0056"], ["lat", "40.7126"], ["sublet_id", 7], ["created_at", "2017-08-10 14:21:21.492730"], ["updated_at", "2017-08-10 14:21:21.492730"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/4217/hotel-bed-bedroom-room.jpg"], ["caption", "Bedroom"], ["sublet_id", 7], ["created_at", "2017-08-10 14:21:21.496356"], ["updated_at", "2017-08-10 14:21:21.496356"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276696/pexels-photo-276696.jpeg"], ["caption", "Living Room"], ["sublet_id", 7], ["created_at", "2017-08-10 14:21:21.499735"], ["updated_at", "2017-08-10 14:21:21.499735"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271762/pexels-photo-271762.jpeg"], ["caption", "Kitchen"], ["sublet_id", 7], ["created_at", "2017-08-10 14:21:21.503084"], ["updated_at", "2017-08-10 14:21:21.503084"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Summer Fun"], ["owner_id", 8], ["description", "Enormous apartment with great sunlight! Elevator building! Huge apartment so big currently being used by 4 roommates! Flex 4BR or Big 3BR! Rents fast. Steps to cafes, restaurants, and best nightlife. "], ["price", 75000], ["start_date", "2017-11-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:21:21.506015"], ["updated_at", "2017-08-10 14:21:21.506015"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0057"], ["lat", "40.7127"], ["sublet_id", 8], ["created_at", "2017-08-10 14:21:21.507498"], ["updated_at", "2017-08-10 14:21:21.507498"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271695/pexels-photo-271695.jpeg"], ["caption", "Bedroom"], ["sublet_id", 8], ["created_at", "2017-08-10 14:21:21.511511"], ["updated_at", "2017-08-10 14:21:21.511511"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg"], ["caption", "Living Room"], ["sublet_id", 8], ["created_at", "2017-08-10 14:21:21.514962"], ["updated_at", "2017-08-10 14:21:21.514962"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276651/pexels-photo-276651.jpeg"], ["caption", "Kitchen"], ["sublet_id", 8], ["created_at", "2017-08-10 14:21:21.518572"], ["updated_at", "2017-08-10 14:21:21.518572"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:21:38 -0400
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:21:38 -0400
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::AuthController#show as JSON
+  Parameters: {"auth"=>{}}
+  [1m[35m (19.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::SubletsController#index as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSublet Load (1.0ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.18ms)
+Completed 200 OK in 37ms (Views: 3.9ms | ActiveRecord: 15.5ms)
+
+
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.6ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (69.72ms)
+Completed 200 OK in 121ms (Views: 76.3ms | ActiveRecord: 39.1ms)
+
+
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:25:12 -0400
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:25:12 -0400
+Processing by Api::V1::AuthController#show as JSON
+Processing by Api::V1::SubletsController#index as */*
+  Parameters: {"auth"=>{}}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.09ms)
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+Completed 200 OK in 19ms (Views: 0.8ms | ActiveRecord: 10.6ms)
+
+
+  [1m[36mSublet Load (1.1ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.5ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.5ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.5ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.5ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (50.57ms)
+Completed 200 OK in 74ms (Views: 53.6ms | ActiveRecord: 20.1ms)
+
+
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:25:31 -0400
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:25:31 -0400
+Processing by Api::V1::AuthController#show as JSON
+Processing by Api::V1::SubletsController#index as */*
+  Parameters: {"auth"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.09ms)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.3ms)
+
+
+  [1m[36mSublet Load (2.1ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (30.28ms)
+Completed 200 OK in 35ms (Views: 27.8ms | ActiveRecord: 7.2ms)
+
+
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:25:34 -0400
+Processing by Api::V1::AuthController#show as JSON
+  Parameters: {"auth"=>{}}
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:25:34 -0400
+Processing by Api::V1::SubletsController#index as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.07ms)
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.4ms)
+
+
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSublet Load (0.4ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (28.69ms)
+Completed 200 OK in 33ms (Views: 27.1ms | ActiveRecord: 5.5ms)
+
+
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:26:16 -0400
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:26:16 -0400
+Processing by Api::V1::AuthController#show as JSON
+Processing by Api::V1::SubletsController#index as */*
+  Parameters: {"auth"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.07ms)
+Completed 200 OK in 3ms (Views: 0.5ms | ActiveRecord: 0.3ms)
+
+
+  [1m[36mSublet Load (1.1ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.6ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.6ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (36.72ms)
+Completed 200 OK in 42ms (Views: 34.1ms | ActiveRecord: 7.8ms)
+
+
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (139.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_development"[0m
+  [1m[35m (144.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_test"[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(4709995827031202925);[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20170711144039)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "password_digest" character varying, "email" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144039"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSublets (20170711144229)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "sublets" ("id" bigserial primary key, "name" character varying, "owner_id" bigint, "description" text, "price" integer, "start_date" date, "end_date" date, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX  "index_sublets_on_owner_id" ON "sublets"  ("owner_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711144229"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLocations (20170711145022)
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "locations" ("id" bigserial primary key, "name" character varying, "long" decimal, "lat" decimal, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_8012a3fd47"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX  "index_locations_on_sublet_id" ON "locations"  ("sublet_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170711145022"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateImages (20170712164453)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "images" ("id" bigserial primary key, "url" character varying, "caption" character varying, "sublet_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_927b1df53b"
+FOREIGN KEY ("sublet_id")
+  REFERENCES "sublets" ("id")
+)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_images_on_sublet_id" ON "images"  ("sublet_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20170712164453"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-08-10 14:27:05.597666"], ["updated_at", "2017-08-10 14:27:05.597666"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(4709995827031202925)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Adam"], ["last_name", "Adamsson"], ["password_digest", "$2a$10$Gy5Bgd.BWXnnTPjxEVW5AuYMyRUVnT0R1MxRNkriQ8uSUpVm6jfTq"], ["email", "a@example.com"], ["created_at", "2017-08-10 14:27:11.924308"], ["updated_at", "2017-08-10 14:27:11.924308"]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Brian"], ["last_name", "Briansson"], ["password_digest", "$2a$10$c3q2kLRRB48tVFtruuh9e.T9iDcv4GYLEL35ml52STiZ2Q/JyicJS"], ["email", "b@example.com"], ["created_at", "2017-08-10 14:27:12.009235"], ["updated_at", "2017-08-10 14:27:12.009235"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Carl"], ["last_name", "Carlsson"], ["password_digest", "$2a$10$Pd3cuzdHJwiPCXb.T.PAFuXHqkBIWL4LCCWZfkvsVbS3FTjNnu/ia"], ["email", "c@example.com"], ["created_at", "2017-08-10 14:27:12.089420"], ["updated_at", "2017-08-10 14:27:12.089420"]]
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Darren"], ["last_name", "Darrensson"], ["password_digest", "$2a$10$5MyO884q03.jB26cEMhmQ.hGF/ROVRU7RMiVpsSacPjPUa28CTKiW"], ["email", "d@example.com"], ["created_at", "2017-08-10 14:27:12.162388"], ["updated_at", "2017-08-10 14:27:12.162388"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Elrod"], ["last_name", "Elrodsson"], ["password_digest", "$2a$10$/kiZ3crlLyre7nEuLI1fJuiCe4Fwjguf8gcyWsrY5h7nCzAGHr5gC"], ["email", "e@example.com"], ["created_at", "2017-08-10 14:27:12.231531"], ["updated_at", "2017-08-10 14:27:12.231531"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Frank"], ["last_name", "Franksson"], ["password_digest", "$2a$10$ZKX8hCIz60SN2dlQpRpfC.kmDiuQUfZQBxv4el.mZtlS9sRuchSbe"], ["email", "f@example.com"], ["created_at", "2017-08-10 14:27:12.299212"], ["updated_at", "2017-08-10 14:27:12.299212"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "George"], ["last_name", "Georgesson"], ["password_digest", "$2a$10$IH9EwKDyXERZYENDhL3zR.t0UBQ6vhav1YVrAvB0DtCXLWwwarUcW"], ["email", "g@example.com"], ["created_at", "2017-08-10 14:27:12.370287"], ["updated_at", "2017-08-10 14:27:12.370287"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "password_digest", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["first_name", "Harold"], ["last_name", "Haroldsson"], ["password_digest", "$2a$10$lRqe/SsImTBybFT0kL/VB.lwiA/psCWIEgxDFWcvey4YRWVzTansu"], ["email", "h@example.com"], ["created_at", "2017-08-10 14:27:12.439000"], ["updated_at", "2017-08-10 14:27:12.439000"]]
+  [1m[35m (2.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Cool Digs"], ["owner_id", 1], ["description", "Spacious, elegant, and majestic, this enormous apartment features marble counter tops, Viking stainless steel appliances, bamboo floors and cabinets, deluxe bathrooms, featuring standing glass showers and beautiful soaking tub options, walk-in closets, and sweeping views. Just as exquisite as it is practical, this gorgeous apartment is the epitome of real estate heaven!"], ["price", 80000], ["start_date", "2017-09-01"], ["end_date", "2017-10-01"], ["created_at", "2017-08-10 14:27:12.486818"], ["updated_at", "2017-08-10 14:27:12.486818"]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.005"], ["lat", "40.712"], ["sublet_id", 1], ["created_at", "2017-08-10 14:27:12.488777"], ["updated_at", "2017-08-10 14:27:12.488777"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg"], ["caption", "Bedroom"], ["sublet_id", 1], ["created_at", "2017-08-10 14:27:12.513377"], ["updated_at", "2017-08-10 14:27:12.513377"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276715/pexels-photo-276715.jpeg"], ["caption", "Living Room"], ["sublet_id", 1], ["created_at", "2017-08-10 14:27:12.517857"], ["updated_at", "2017-08-10 14:27:12.517857"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273822/pexels-photo-273822.jpeg"], ["caption", "Kitchen"], ["sublet_id", 1], ["created_at", "2017-08-10 14:27:12.520898"], ["updated_at", "2017-08-10 14:27:12.520898"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Minimalist Design"], ["owner_id", 2], ["description", "This apartment combines light, quiet, and space in a way rarely found. Studio living at includes a boutique style unit with high ceilings, hardwood floors, and an oversize bathroom. State of the art appliances and custom cabinetry deliver a chic New York style. Most importantly, living here makes you a part of our community. Our amenities and tenant events turn your rental into a home."], ["price", 100000], ["start_date", "2017-09-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:27:12.523724"], ["updated_at", "2017-08-10 14:27:12.523724"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0051"], ["lat", "40.7121"], ["sublet_id", 2], ["created_at", "2017-08-10 14:27:12.525097"], ["updated_at", "2017-08-10 14:27:12.525097"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.unsplash.com/photo-1466098672325-c9ddda4b7975"], ["caption", "Bedroom"], ["sublet_id", 2], ["created_at", "2017-08-10 14:27:12.534561"], ["updated_at", "2017-08-10 14:27:12.534561"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/245208/pexels-photo-245208.jpeg"], ["caption", "Living Room"], ["sublet_id", 2], ["created_at", "2017-08-10 14:27:12.538531"], ["updated_at", "2017-08-10 14:27:12.538531"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/273843/pexels-photo-273843.jpeg"], ["caption", "Kitchen"], ["sublet_id", 2], ["created_at", "2017-08-10 14:27:12.541655"], ["updated_at", "2017-08-10 14:27:12.541655"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Modern Living"], ["owner_id", 3], ["description", "Recently renovated, these well-lit units feature unique barnwood-style plank flooring and stainless steel appliances along with a balcony or private terrace in most units. Amenities include a newly renovated lobby with a seating area and fireplace, 24-hour doorman, redesigned top floor amenities including a state-of-the-art fitness center, residents lounge with billiards and catering kitchen, and an on-site garage. Laundry is located on every floor and in some select units, pets are welcome!"], ["price", 60000], ["start_date", "2017-09-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:27:12.544084"], ["updated_at", "2017-08-10 14:27:12.544084"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0052"], ["lat", "40.7122"], ["sublet_id", 3], ["created_at", "2017-08-10 14:27:12.545342"], ["updated_at", "2017-08-10 14:27:12.545342"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg"], ["caption", "Bedroom"], ["sublet_id", 3], ["created_at", "2017-08-10 14:27:12.549012"], ["updated_at", "2017-08-10 14:27:12.549012"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271660/pexels-photo-271660.jpeg"], ["caption", "Living Room"], ["sublet_id", 3], ["created_at", "2017-08-10 14:27:12.552694"], ["updated_at", "2017-08-10 14:27:12.552694"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/94865/pexels-photo-94865.jpeg"], ["caption", "Kitchen"], ["sublet_id", 3], ["created_at", "2017-08-10 14:27:12.556215"], ["updated_at", "2017-08-10 14:27:12.556215"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Heart of the City"], ["owner_id", 4], ["description", "Condo quality finishes in this double exposure (south and west) alcove studio. With natural hardwood strip flooring, soaring ceilings and an open layout, this is where you want to come home. A full sized washer and dryer, top-of-the-line stainless steel appliances, including a dishwasher and microwave. The kitchen also has custom Italian satin finish cabinetry with soft-close features. The bathroom is surprisingly spacious with a deep soaking tub and built-in grooming station. This intelligently designed apartment has floor-to-ceiling windows and unbeatable closets. Will fit a king sized bed plus additional furniture."], ["price", 120000], ["start_date", "2017-10-01"], ["end_date", "2017-11-01"], ["created_at", "2017-08-10 14:27:12.559074"], ["updated_at", "2017-08-10 14:27:12.559074"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0053"], ["lat", "40.7123"], ["sublet_id", 4], ["created_at", "2017-08-10 14:27:12.560489"], ["updated_at", "2017-08-10 14:27:12.560489"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/210604/pexels-photo-210604.jpeg"], ["caption", "Bedroom"], ["sublet_id", 4], ["created_at", "2017-08-10 14:27:12.564362"], ["updated_at", "2017-08-10 14:27:12.564362"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/77931/pexels-photo-77931.jpeg"], ["caption", "Living Room"], ["sublet_id", 4], ["created_at", "2017-08-10 14:27:12.567835"], ["updated_at", "2017-08-10 14:27:12.567835"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/259828/pexels-photo-259828.jpeg"], ["caption", "Kitchen"], ["sublet_id", 4], ["created_at", "2017-08-10 14:27:12.571244"], ["updated_at", "2017-08-10 14:27:12.571244"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Downtown Life"], ["owner_id", 5], ["description", "Stunning & fully renovated large 3BR in the heart of Gramercy Park. A separate kitchen includes stainless steel appliances with new granite counter tops and cabinets. In addition to the kitchen, the bathroom is also completely gut renovated with marble tile, a new shower bath, and beautiful vanity. The bedrooms all fit a queen size beds! Enjoy recessed lighting throughout this unit. Walk to shopping, cafes, nightlife, and Gramercy Park! Washer/Dryer inside your apartment for Laundry! Newly renovated building."], ["price", 95000], ["start_date", "2017-10-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:27:12.573745"], ["updated_at", "2017-08-10 14:27:12.573745"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0054"], ["lat", "40.7124"], ["sublet_id", 5], ["created_at", "2017-08-10 14:27:12.575200"], ["updated_at", "2017-08-10 14:27:12.575200"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/90319/pexels-photo-90319.jpeg"], ["caption", "Bedroom"], ["sublet_id", 5], ["created_at", "2017-08-10 14:27:12.579066"], ["updated_at", "2017-08-10 14:27:12.579066"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279607/pexels-photo-279607.jpeg"], ["caption", "Living Room"], ["sublet_id", 5], ["created_at", "2017-08-10 14:27:12.582268"], ["updated_at", "2017-08-10 14:27:12.582268"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/100575/pexels-photo-100575.jpeg"], ["caption", "Kitchen"], ["sublet_id", 5], ["created_at", "2017-08-10 14:27:12.585558"], ["updated_at", "2017-08-10 14:27:12.585558"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Won't Last Long"], ["owner_id", 6], ["description", "Stunning & fully renovated large apartment. Elevator Building! Brand new kitchen includes all new high end modern appliances, custom marble counter tops, & white/grey cabinets. Sunny, Bright, & Spacious this apartment boasts a charming atmosphere with crown moldings and condo finishes. The bathroom is also completely gut renovated with marble tile, a new shower with euro glass, and beautiful vanity. The bedrooms; 1 fits a KING size bed and the other fits a queen size bed. The bedrooms also feature large closets, and there is another closet in the foyer. Enjoy recessed lighting throughout this unit."], ["price", 750000], ["start_date", "2017-10-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:27:12.588487"], ["updated_at", "2017-08-10 14:27:12.588487"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0055"], ["lat", "40.7125"], ["sublet_id", 6], ["created_at", "2017-08-10 14:27:12.589913"], ["updated_at", "2017-08-10 14:27:12.589913"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276671/pexels-photo-276671.jpeg"], ["caption", "Bedroom"], ["sublet_id", 6], ["created_at", "2017-08-10 14:27:12.594052"], ["updated_at", "2017-08-10 14:27:12.594052"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276663/pexels-photo-276663.jpeg"], ["caption", "Living Room"], ["sublet_id", 6], ["created_at", "2017-08-10 14:27:12.597237"], ["updated_at", "2017-08-10 14:27:12.597237"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271647/pexels-photo-271647.jpeg"], ["caption", "Kitchen"], ["sublet_id", 6], ["created_at", "2017-08-10 14:27:12.600299"], ["updated_at", "2017-08-10 14:27:12.600299"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Cool & Contemporary"], ["owner_id", 7], ["description", "NO FEE!!! OPEN CITY VIEWS - Flex two bedroom, one bathroom. 24 HR doorman, live in super, elevator - gorgeous building, close to shops, major transportation and parks. Large renovated kitchen with all new appliances. ample closet space, renovated bathroom, living room is facing 30th street -very bright and open . Large entry hallway. This is a must see apartment!"], ["price", 95000], ["start_date", "2017-11-01"], ["end_date", "2017-12-01"], ["created_at", "2017-08-10 14:27:12.602894"], ["updated_at", "2017-08-10 14:27:12.602894"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0056"], ["lat", "40.7126"], ["sublet_id", 7], ["created_at", "2017-08-10 14:27:12.604422"], ["updated_at", "2017-08-10 14:27:12.604422"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/4217/hotel-bed-bedroom-room.jpg"], ["caption", "Bedroom"], ["sublet_id", 7], ["created_at", "2017-08-10 14:27:12.608181"], ["updated_at", "2017-08-10 14:27:12.608181"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276696/pexels-photo-276696.jpeg"], ["caption", "Living Room"], ["sublet_id", 7], ["created_at", "2017-08-10 14:27:12.611261"], ["updated_at", "2017-08-10 14:27:12.611261"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271762/pexels-photo-271762.jpeg"], ["caption", "Kitchen"], ["sublet_id", 7], ["created_at", "2017-08-10 14:27:12.614527"], ["updated_at", "2017-08-10 14:27:12.614527"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Summer Fun"], ["owner_id", 8], ["description", "Enormous apartment with great sunlight! Elevator building! Huge apartment so big currently being used by 4 roommates! Flex 4BR or Big 3BR! Rents fast. Steps to cafes, restaurants, and best nightlife. "], ["price", 75000], ["start_date", "2017-11-01"], ["end_date", "2018-01-01"], ["created_at", "2017-08-10 14:27:12.617420"], ["updated_at", "2017-08-10 14:27:12.617420"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["long", "-74.0057"], ["lat", "40.7127"], ["sublet_id", 8], ["created_at", "2017-08-10 14:27:12.618839"], ["updated_at", "2017-08-10 14:27:12.618839"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/271695/pexels-photo-271695.jpeg"], ["caption", "Bedroom"], ["sublet_id", 8], ["created_at", "2017-08-10 14:27:12.622708"], ["updated_at", "2017-08-10 14:27:12.622708"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/279719/pexels-photo-279719.jpeg"], ["caption", "Living Room"], ["sublet_id", 8], ["created_at", "2017-08-10 14:27:12.625723"], ["updated_at", "2017-08-10 14:27:12.625723"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/276651/pexels-photo-276651.jpeg"], ["caption", "Kitchen"], ["sublet_id", 8], ["created_at", "2017-08-10 14:27:12.628791"], ["updated_at", "2017-08-10 14:27:12.628791"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/v1/me" for 127.0.0.1 at 2017-08-10 10:27:23 -0400
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:27:23 -0400
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::SubletsController#index as */*
+  [1m[35m (23.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::AuthController#show as JSON
+  [1m[36mUser Load (4.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  Parameters: {"auth"=>{}}
+  [1m[36mSublet Load (2.0ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.18ms)
+Completed 200 OK in 33ms (Views: 3.7ms | ActiveRecord: 5.9ms)
+
+
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (77.25ms)
+Completed 200 OK in 140ms (Views: 99.6ms | ActiveRecord: 31.0ms)
+
+
+Started GET "/api/v1/users/3" for 127.0.0.1 at 2017-08-10 10:27:57 -0400
+Processing by Api::V1::UsersController#show as JSON
+  Parameters: {"id"=>"3", "user"=>{}}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mSublet Load (0.6ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets" WHERE "sublets"."owner_id" = $1[0m  [["owner_id", 3]]
+[active_model_serializers]   [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers] Rendered UserSerializer with ActiveModelSerializers::Adapter::Attributes (14.47ms)
+Completed 200 OK in 61ms (Views: 34.8ms | ActiveRecord: 17.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-08-10 10:29:46 -0400
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/kylewelt/.rvm/gems/ruby-2.3.0/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/kylewelt/.rvm/gems/ruby-2.3.0/gems/railties-5.1.2/lib/rails/templates/rails/welcome/index.html.erb (4.4ms)
+Completed 200 OK in 13ms (Views: 10.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2017-08-10 10:29:47 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (5.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.2) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.2) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.2) lib/rails/rack/logger.rb:24:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.2) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+rack-cors (0.4.1) lib/rack/cors.rb:81:in `call'
+railties (5.1.2) lib/rails/engine.rb:522:in `call'
+puma (3.9.1) lib/puma/configuration.rb:224:in `call'
+puma (3.9.1) lib/puma/server.rb:602:in `handle_request'
+puma (3.9.1) lib/puma/server.rb:435:in `process_client'
+puma (3.9.1) lib/puma/server.rb:299:in `block in run'
+puma (3.9.1) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:29:51 -0400
+Processing by Api::V1::SubletsController#index as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSublet Load (0.6ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (28.33ms)
+Completed 200 OK in 32ms (Views: 25.9ms | ActiveRecord: 5.4ms)
+
+
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:30:41 -0400
+Processing by Api::V1::SubletsController#index as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSublet Load (0.6ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (34.79ms)
+Completed 200 OK in 39ms (Views: 32.8ms | ActiveRecord: 6.0ms)
+
+
+Started POST "/api/v1/auth" for 127.0.0.1 at 2017-08-10 10:31:00 -0400
+Processing by Api::V1::AuthController#create as JSON
+  Parameters: {"email"=>"a@example.com", "password"=>"[FILTERED]", "auth"=>{"email"=>"a@example.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "a@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.09ms)
+Completed 200 OK in 77ms (Views: 1.1ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:32:51 -0400
+Processing by Api::V1::SubletsController#create as JSON
+  Parameters: {"name"=>"Act Fast!", "price"=>80000, "start_date"=>"2017-08-10", "end_date"=>"2017-08-31", "description"=>"Stunning new sublet!!", "location"=>{"name"=>"11 Broadway, New York, NY", "lat"=>40.7052529, "long"=>-74.01407030000001}, "images"=>[{"url"=>"https://images.pexels.com/photos/189293/pexels-photo-189293.jpeg", "caption"=>"Bedroom"}], "sublet"=>{"name"=>"Act Fast!", "description"=>"Stunning new sublet!!", "price"=>80000, "start_date"=>"2017-08-10", "end_date"=>"2017-08-31"}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "sublets" ("name", "owner_id", "description", "price", "start_date", "end_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Act Fast!"], ["owner_id", 1], ["description", "Stunning new sublet!!"], ["price", 80000], ["start_date", "2017-08-10"], ["end_date", "2017-08-31"], ["created_at", "2017-08-10 14:32:51.816329"], ["updated_at", "2017-08-10 14:32:51.816329"]]
+  [1m[35m (5.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "images" ("url", "caption", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["url", "https://images.pexels.com/photos/189293/pexels-photo-189293.jpeg"], ["caption", "Bedroom"], ["sublet_id", 9], ["created_at", "2017-08-10 14:32:51.830799"], ["updated_at", "2017-08-10 14:32:51.830799"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 9], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "locations" ("name", "long", "lat", "sublet_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "11 Broadway, New York, NY"], ["long", "-74.0140703"], ["lat", "40.7052529"], ["sublet_id", 9], ["created_at", "2017-08-10 14:32:51.837393"], ["updated_at", "2017-08-10 14:32:51.837393"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.06ms)
+Completed 200 OK in 28ms (Views: 0.4ms | ActiveRecord: 10.0ms)
+
+
+Started GET "/api/v1/sublets" for 127.0.0.1 at 2017-08-10 10:32:51 -0400
+Processing by Api::V1::SubletsController#index as */*
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSublet Load (0.3ms)[0m  [1m[34mSELECT "sublets".* FROM "sublets"[0m
+[active_model_serializers]   [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 1], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 3], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 4], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 5], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 6], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 7], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.3ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 8], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT  "locations".* FROM "locations" WHERE "locations"."sublet_id" = $1 LIMIT $2[0m  [["sublet_id", 9], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.2ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 1]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 2]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 3]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 4]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 5]]
+[active_model_serializers]   [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 6]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 7]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 8]]
+[active_model_serializers]   [1m[36mImage Load (0.4ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."sublet_id" = $1[0m  [["sublet_id", 9]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (40.71ms)
+Completed 200 OK in 44ms (Views: 38.1ms | ActiveRecord: 6.0ms)
+
+

@@ -8,14 +8,14 @@ class SubletInfo extends React.Component {
     liked: false,
     heartSize: ['tiny', 'small', 'large', 'big', 'huge', 'massive'],
     clickCount: 0,
-    spinThatShit: false
+    spin: false
   }
 
   handleClick = () => {
     this.setState({
       liked: true,
       clickCount: this.state.clickCount > 4 ? 5 : this.state.clickCount + 1,
-      spinThatShit: this.state.clickCount === 5 ? true : false
+      spin: this.state.clickCount === 5 ? true : false
     })
   }
 
